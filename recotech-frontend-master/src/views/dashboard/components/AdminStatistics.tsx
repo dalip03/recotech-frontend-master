@@ -38,29 +38,29 @@ const AdminStatistics: React.FC = () => {
                 clickable
                 className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl"
             >
-                <h5 className="text-4xl font-bold">{t('Users')}</h5>
-                <p className="mt-10 text-4xl font-bold">{statistics.totalUsers !== null ? statistics.totalUsers : 'N/A'}</p>
+                <h5 className="text-xl">{t('Users')}</h5>
+                <p className="mt-5 text-3xl font-bold">{statistics.totalUsers !== null ? statistics.totalUsers : 'N/A'}</p>
             </Card>
             <Card
                 clickable
                 className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl"
             >
-                <h5 className="text-4xl font-bold">{t('Projects')}</h5>
-                <p className="mt-10 text-4xl font-bold">{statistics.totalProjects !== null ? statistics.totalProjects : 'N/A'}</p>
+                <h5 className="text-xl">{t('Projects')}</h5>
+                <p className="mt-5 text-3xl font-bold">{statistics.totalProjects !== null ? statistics.totalProjects : 'N/A'}</p>
             </Card>
             <Card
                 clickable
                 className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl"
             >
-                <h5 className="text-4xl font-bold">{t('Expenses')}</h5>
-                <p className="mt-10 text-4xl font-bold">{statistics.totalExpenses !== null && statistics.totalExpenses !== undefined ? `${statistics.totalExpenses} RON` : 'N/A'}</p>
+                <h5 className="text-xl">{t('Expenses')}</h5>
+                <p className="mt-5 text-2xl font-bold">{statistics.totalExpenses !== null && statistics.totalExpenses !== undefined ? `${statistics.totalExpenses} RON` : 'N/A'}</p>
             </Card>
             <Card
                 clickable
                 className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl"
             >
-                <h5 className="text-4xl font-bold">{t('Income')}</h5>
-                <p className="mt-10 text-4xl font-bold">{statistics.totalIncomes !== null && statistics.totalIncomes !== undefined ? `${statistics.totalIncomes} RON` : 'N/A'}</p>
+                <h5 className="text-xl">{t('Income')}</h5>
+                <p className="mt-5 text-2xl font-bold">{statistics.totalIncomes !== null && statistics.totalIncomes !== undefined ? `${statistics.totalIncomes} RON` : 'N/A'}</p>
             </Card>
         </div>
     );

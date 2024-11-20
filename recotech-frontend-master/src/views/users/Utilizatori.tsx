@@ -130,11 +130,11 @@ const Utilizatori = () => {
     return (
         <div>
             <div>
-                <h3 className="text-3xl font-semibold mb-4">{t("Users")}</h3>
+            <h3 className="pb-4 pt-4 font-bold ">{t("Users")}</h3>
             </div>
             <div className="flex flex-row justify-between gap-4 "></div>
             <div
-                className="mt-4"
+               
                 style={{
                     border: '1px solid #d1d5db',
                     borderRadius: '8px',

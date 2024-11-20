@@ -124,7 +124,7 @@ const Documente = () => {
     return (
         <div>
             <div>
-                <h3 className="text-3xl font-semibold mb-4">{t("Documents")}</h3>
+            <h3 className="pb-4 pt-4 font-bold ">{t("Documents")}</h3>
             </div>
             <div className="flex flex-wrap items-center justify-between">
                 <Button onClick={() => setModalSettings((prev) => ({ ...prev, isOpen: true }))} className="mb-4 w-full lg:w-fit" shape="circle">

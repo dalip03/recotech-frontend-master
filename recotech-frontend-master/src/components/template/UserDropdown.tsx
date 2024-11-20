@@ -26,9 +26,9 @@ const _UserDropdown = ({ className }: CommonProps) => {
             {user.profilePicture != '' &&
                 (<Avatar size={32} shape="circle" src={user.profilePicture} />) || (<Avatar size={32} shape="circle" icon={<HiOutlineUser />} />)
             }
-            <div className="hidden md:block">
-                <div className="text-xs capitalize">{user?.authority}</div>
-                <div className="font-bold">{user?.name}</div>
+            <div className="hidden md:block items-center">
+                <div className="font-bold black capitalize">{user?.authority}</div>
+                <div className="flex font-xs font-semibold justify-center">{user?.name}</div>
             </div>
         </div>
     )

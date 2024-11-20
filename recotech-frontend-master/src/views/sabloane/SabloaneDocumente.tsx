@@ -164,11 +164,11 @@ const SabloaneDocumente = () => {
     return (
         <div>
             <div>
-                <h3 className="text-3xl font-semibold mb-4">{t("Document Templates")}</h3>
+            <h3 className="pb-4 pt-4 font-bold ">{t("Document Templates")}</h3>
             </div>
             <div className="flex items-center justify-between">
                 <Button
-                    className="mb-4"
+                  
                     shape="circle"
                     onClick={handleOpenModal}
                 >

@@ -30,15 +30,15 @@ export default function Parts() {
                 clickable
                 className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl"
             >
-                <h5 className="text-4xl font-bold"># {t("Part Types")}</h5>
-                <p className="mt-10 text-4xl font-bold">{parts.totalParts !== null ? parts.totalParts : 'N/A'}</p>
+                <h5 className="text-2xl"> {t("Part Types")}</h5>
+                <p className="mt-5 text-3xl font-bold">{parts.totalParts !== null ? parts.totalParts : 'N/A'}</p>
             </Card>
             <Card
                 clickable
                 className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl"
             >
-                <h5 className="text-4xl font-bold"># {t("Total Parts")}</h5>
-                <p className="mt-10 text-4xl font-bold">{parts.totalQuantityParts !== null ? parts.totalQuantityParts : 'N/A'}</p>
+                <h5 className="text-2xl"> {t("Total Parts")}</h5>
+                <p className="mt-5 text-3xl font-bold">{parts.totalQuantityParts !== null ? parts.totalQuantityParts : 'N/A'}</p>
             </Card>
         </div>
     );

@@ -37,7 +37,7 @@ const Operators: React.FC = () => {
     return (
         <div>
             <div className="flex items-center justify-between w-full mb-4 mt-4">
-                <h4 className="text-3xl font-semibold">{t("Operators")}</h4>
+            <h3 className="pb-4 pt-4 font-bold ">{t("Operators")}</h3>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4">

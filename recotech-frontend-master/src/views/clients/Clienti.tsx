@@ -164,10 +164,10 @@ const Clienti = () => {
     return (
         <div>
             <div>
-                <h3 className="text-3xl font-semibold mb-4">{t("Clients")}</h3>
+            <h3 className="pb-4 pt-4 font-bold ">{t("Clients")}</h3>
             </div>
             <div
-                className="mt-4"
+               
                 style={{
                     border: '1px solid #d1d5db',
                     borderRadius: '8px',

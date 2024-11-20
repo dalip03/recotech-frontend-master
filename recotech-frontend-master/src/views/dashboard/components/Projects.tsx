@@ -39,7 +39,7 @@ const Projects: React.FC = () => {
         <div>
             {hasAccess(userRole, ['ADMIN']) && (
                 <div className="flex items-center justify-between w-full mb-4 mt-4">
-                    <h4 className="text-3xl font-semibold">{t("Projects")}</h4>
+                 <h3 className="pb-4 pt-4 font-bold ">{t("Projects")}</h3>
                     <Button onClick={() => navigate('/proiecte/nou')} shape="circle">{t("New Project")} +</Button>
                 </div>
             )}

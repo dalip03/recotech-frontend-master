@@ -11,7 +11,7 @@ export default function Reports() {
     return (
         <div className="space-y-4">
             <div>
-                <h3 className="text-3xl font-semibold mb-4">Dashboard</h3>
+            <h3 className="pb-4 pt-4 font-bold ">Dashboard</h3>
             </div>
             <Suspense fallback={
                 <div className="flex justify-center items-center h-full w-full">
@@ -20,16 +20,16 @@ export default function Reports() {
             }>
                 <AdminStatistics />
                 <div>
-                    <h2>Piese</h2>
+                <h3 className="pb-4 pt-4 font-bold ">Piese</h3>
                     <Parts />
                 </div>
                 <div>
-                    <h2>Magazie</h2>
+                <h3 className="pb-4 pt-4 font-bold ">Magazie</h3>
                     <RequestParts />
                 </div>
                 <Projects />
                 <div className='my-4'>
-                    <h2 className="mb-2">Sarcini</h2>
+                <h3 className="pb-4 pt-4 font-bold ">Sarcini</h3>
                     <TaskStatistics />
                 </div>
                 <Users />

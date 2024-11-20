@@ -82,52 +82,59 @@ const Users: React.FC = () => {
     return (
         <div>
             <div className="flex items-center justify-between w-full mb-4 mt-4">
-                <h4 className="text-3xl font-semibold">{t("Operators")}</h4>
+            <h3 className="pb-4 pt-4 font-bold ">{t("Operators")}</h3>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4">
                 {users.slice(0, visibleCount).map((user) => (
-                    <Card
-                        key={user.id}
-                        clickable
-                        className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl"
-                    >
-                        <h5>
-                            {user.firstName} {user.lastName} ({getTranslatedRole(user.role)})
-                        </h5>
-                        <div className="flex flex-row gap-2 mt-8">
-                            <p>{t("White Points")}:</p>
-                            {[...Array(Math.min(user.whitePoints, 3))].map((_, i) => (
-                                <div
-                                    key={i}
-                                    className="w-4 h-4 bg-white rounded-full border"
-                                ></div>
-                            ))}
-                            {user.whitePoints > 3 && (
-                                <p className="ml-2">+{user.whitePoints - 3}</p>
-                            )}
-                        </div>
-                        <div className="flex flex-row gap-2 mt-6">
-                            <p>{t("Black Points")}:</p>
-                            {[...Array(Math.min(user.blackPoints, 3))].map((_, i) => (
-                                <div
-                                    key={i}
-                                    className="w-4 h-4 bg-black rounded-full"
-                                ></div>
-                            ))}
-                            {user.blackPoints > 3 && (
-                                <p className="ml-2">+{user.blackPoints - 3}</p>
-                            )}
-                        </div>
-                        <div className="flex flex-row gap-2 mt-6">
-                            <p>{t("Tasks in progress")}:</p>
-                            <p>{user.statistics.inProgress}</p>
-                        </div>
-                        <div className="flex flex-row gap-2 mt-6">
-                            <p>{t("Tasks done")}:</p>
-                            <p>{user.statistics.done}</p>
-                        </div>
-                    </Card>
+                  <Card
+                  key={user.id}
+                  clickable
+                  className="hover:shadow-xl transition duration-300 ease-in-out rounded-2xl p-2"
+              >
+                  <h5 className="text-2xl font-semibold">
+                      {user.firstName} {user.lastName} ({getTranslatedRole(user.role)})
+                  </h5>
+              
+                  <div className="mt-6">
+                      <div className="flex flex-row items-center gap-2">
+                          <p className="text-lg font-medium">{t("White Points")}:</p>
+                          {[...Array(Math.min(user.whitePoints, 3))].map((_, i) => (
+                              <div
+                                  key={i}
+                                  className="w-4 h-4 bg-white rounded-full border border-gray-300"
+                              ></div>
+                          ))}
+                          {user.whitePoints > 3 && (
+                              <p className="ml-2 text-sm font-light">+{user.whitePoints - 3}</p>
+                          )}
+                      </div>
+              
+                      <div className="flex flex-row items-center gap-2 mt-4">
+                          <p className="text-lg font-medium">{t("Black Points")}:</p>
+                          {[...Array(Math.min(user.blackPoints, 3))].map((_, i) => (
+                              <div
+                                  key={i}
+                                  className="w-4 h-4 bg-black rounded-full border border-gray-300"
+                              ></div>
+                          ))}
+                          {user.blackPoints > 3 && (
+                              <p className="ml-2 text-sm font-light">+{user.blackPoints - 3}</p>
+                          )}
+                      </div>
+              
+                      <div className="flex flex-row items-center gap-2 mt-6">
+                          <p className="text-lg font-medium">{t("Tasks in progress")}:</p>
+                          <p className="text-lg">{user.statistics.inProgress}</p>
+                      </div>
+              
+                      <div className="flex flex-row items-center gap-2 mt-4">
+                          <p className="text-lg font-medium">{t("Tasks done")}:</p>
+                          <p className="text-lg">{user.statistics.done}</p>
+                      </div>
+                  </div>
+              </Card>
+              
                 ))}
             </div>
 

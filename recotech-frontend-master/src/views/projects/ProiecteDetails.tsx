@@ -88,7 +88,7 @@ export default function ProiectDetails() {
 
     return (
         <div className="text-xl font-semibold">
-            <h1 className="mb-4">{t("Project")}: {id}</h1>
+            <h2 className=" pt-4 font-bold ">{t("Project")}: {id}</h2>
 
             <div className="mb-4">
                 <Steps current={currentStep}>

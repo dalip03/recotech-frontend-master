@@ -110,7 +110,7 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
 const CustomTable: React.FC<CustomTableProps> = ({
     columns,
     data,
-    actionButton,
+    actionButton,   
 }) => {
     const [rowSelection, setRowSelection] = useState({})
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -201,7 +201,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
                     />
                 </div>
             </div>
-            <Table>
+            <Table >
                 <THead>
                     {table.getHeaderGroups().map((headerGroup) => (
                         <Tr key={headerGroup.id}>

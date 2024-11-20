@@ -146,7 +146,7 @@ export default function SabloaneSarcini() {
     return (
         <div>
             <div>
-                <h3 className="text-3xl font-semibold mb-4">{t("Task Templates")}</h3>
+            <h3 className="pb-4 pt-4 font-bold ">{t("Task Templates")}</h3>
             </div>
             <div className="flex flex-wrap items-center justify-between">
                 <Button onClick={handleNewTemplate} className="mb-4" shape="circle">
