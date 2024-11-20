@@ -25,7 +25,6 @@ const fetchProjectsData = () => {
     });
 };
 
-// Wrap the fetch function
 const projectsResource = wrapPromise(fetchProjectsData());
 
 const Projects: React.FC = () => {
@@ -56,7 +55,7 @@ const Projects: React.FC = () => {
 
                     return (
                         <Card
-                            key={project.id} // Ensure each card has a unique key
+                            key={project.id}
                             clickable
                             className="hover:shadow-lg transition duration-150 ease-in-out rounded-2xl"
                             onClick={(e) => navigate(`/proiecte/${project.id}`)}
