@@ -131,7 +131,7 @@ const Piese = () => {
             accessorKey: 'actiuni',
             cell: ({ row }: any) => {
                 const rowActions = [
-                    { eventKey: `${row.original.id}_edit`, label: t("Edit"), onClick: () => handleEdit(row.original.id) },
+                    { eventKey: `${row.original.id}_edit`, label: t("View"), onClick: () => handleEdit(row.original.id) },
                     { eventKey: `${row.original.id}_delete`, label: t("Delete"), onClick: () => handleDelete(row.original.id) },
                 ]
                 return (
