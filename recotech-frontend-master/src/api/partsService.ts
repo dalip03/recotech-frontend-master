@@ -3,6 +3,7 @@ import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_PUBLIC_URL ?? 'http://localhost:8080/api'
 const token = localStorage.getItem('token');
+// console.log(token)
 const AUTH_HEADER = {
     accept: 'application/json',
     Authorization:

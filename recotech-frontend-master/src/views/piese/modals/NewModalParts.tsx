@@ -62,19 +62,21 @@ export default function NewModalParts({ isOpen, onClose, selectedPart }: any) {
                                                     type="text"
                                                     placeholder="Nume piesa..."
                                                     disabled
+                                                    className="text-black"
                                                 />
                                             )}
                                         </Field>
                                     </FormItem>
-                                    <FormItem className="md:col-span-1 mb-2 md:mb-4" label="Marca">
-                                        <Field name="brand">
+                                    <FormItem className="md:col-span-1 mb-2 md:mb-4 " label="Marca">
+                                        <Field name="brand" className="text-black">
                                             {({ field }: FieldProps) => {
                                                 const option = { value: selectedPart.brand, label: selectedPart.brand };
                                                 return (
                                                     <Select
+                                                        className="text-black"
                                                         {...field}
                                                         value={option}
-                                                        options={[option]} // Add options as needed
+                                                        options={[selectedPart.brand]} // Add options as needed
                                                         placeholder="Marca..."
                                                         isDisabled
                                                     />
@@ -92,7 +94,8 @@ export default function NewModalParts({ isOpen, onClose, selectedPart }: any) {
                                                         value={option}
                                                         options={[option]} // Add options as needed
                                                         placeholder="Modelul..."
-                                                        isDisabled
+                                                        isDisabled 
+                                                        className="text-black"
                                                     />
                                                 )
                                             }}
@@ -108,7 +111,8 @@ export default function NewModalParts({ isOpen, onClose, selectedPart }: any) {
                                                         value={option}
                                                         options={[option]} // Add options as needed
                                                         placeholder="Anul..."
-                                                        isDisabled
+                                                        isDisabled 
+                                                        className="text-black"
                                                     />
                                                 )
                                             }}
@@ -124,7 +128,8 @@ export default function NewModalParts({ isOpen, onClose, selectedPart }: any) {
                                                         value={option}
                                                         options={[option]} // Add options as needed
                                                         placeholder="Caroseria..."
-                                                        isDisabled
+                                                        isDisabled 
+                                                        className="text-black"
                                                     />
                                                 )
                                             }}
@@ -144,7 +149,8 @@ export default function NewModalParts({ isOpen, onClose, selectedPart }: any) {
                                                         value={option}
                                                         options={[option]} // Add options as needed
                                                         placeholder="Carburant..."
-                                                        isDisabled
+                                                        isDisabled 
+                                                        className="text-black"
                                                     />
                                                 )
                                             }}
@@ -160,7 +166,8 @@ export default function NewModalParts({ isOpen, onClose, selectedPart }: any) {
                                                         value={option}
                                                         options={[option]} // Add options as needed
                                                         placeholder="Motorizare..."
-                                                        isDisabled
+                                                        isDisabled 
+                                                        className="text-black"
                                                     />
 
                                                 )
@@ -177,7 +184,8 @@ export default function NewModalParts({ isOpen, onClose, selectedPart }: any) {
                                                         value={option}
                                                         options={[option]} // Add options as needed
                                                         placeholder="KW..."
-                                                        isDisabled
+                                                        isDisabled 
+                                                        className="text-black"
                                                     />
                                                 )
                                             }}
@@ -190,7 +198,8 @@ export default function NewModalParts({ isOpen, onClose, selectedPart }: any) {
                                                     {...field}
                                                     type="text"
                                                     placeholder="Cod motor..."
-                                                    disabled
+                                                    disabled 
+                                                    className="text-black"
                                                 />
                                             )}
                                         </Field>
@@ -199,19 +208,20 @@ export default function NewModalParts({ isOpen, onClose, selectedPart }: any) {
 
                                 {/* Third Grid */}
                                 <div className="grid grid-cols-1 md:grid-cols-12 md:gap-3">
-                                    <FormItem className="md:col-span-1 [&>label]:text-red-600 mb-2 md:mb-4" label="Cant.">
+                                    <FormItem className="md:col-span-1 [&>label]:text-slate-600 mb-2 md:mb-4" label="Cant.">
                                         <Field name="quantity">
                                             {({ field }: FieldProps) => (
                                                 <Input
                                                     {...field}
                                                     type="number"
                                                     placeholder="Cant...."
-                                                    disabled
+                                                    disabled 
+                                                    className="text-black"
                                                 />
                                             )}
                                         </Field>
                                     </FormItem>
-                                    <FormItem className="md:col-span-1 [&>label]:text-red-600 mb-2 md:mb-4" label="Calitate">
+                                    <FormItem className="md:col-span-1 [&>label]:text-slate-600 mb-2 md:mb-4" label="Calitate">
                                         <Field name="quality">
                                             {({ field }: FieldProps) => {
                                                 const option = { value: selectedPart.quality, label: selectedPart.quality };
@@ -221,13 +231,14 @@ export default function NewModalParts({ isOpen, onClose, selectedPart }: any) {
                                                         value={option}
                                                         options={[option]} // Add options as needed
                                                         placeholder="Calitate..."
-                                                        isDisabled
+                                                        isDisabled 
+                                                        className="text-black"
                                                     />
                                                 )
                                             }}
                                         </Field>
                                     </FormItem>
-                                    <FormItem className="md:col-span-2 [&>label]:text-red-600 mb-2 md:mb-4" label="Culoare">
+                                    <FormItem className="md:col-span-2 [&>label]:text-slate-600 mb-2 md:mb-4" label="Culoare">
                                         <Field name="color">
                                             {({ field }: FieldProps) => {
                                                 const option = { value: selectedPart.color, label: selectedPart.color };
@@ -237,13 +248,14 @@ export default function NewModalParts({ isOpen, onClose, selectedPart }: any) {
                                                         value={option}
                                                         options={[option]} // Add options as needed
                                                         placeholder="Culoare..."
-                                                        isDisabled
+                                                        isDisabled 
+                                                        className="text-black"
                                                     />
                                                 )
                                             }}
                                         </Field>
                                     </FormItem>
-                                    <FormItem className="md:col-span-2 [&>label]:text-red-600 mb-2 md:mb-4" label="Furnizor">
+                                    <FormItem className="md:col-span-2 [&>label]:text-slate-600 mb-2 md:mb-4" label="Furnizor">
                                         <Field name="provider">
                                             {({ field }: FieldProps) => {
                                                 const option = { value: selectedPart.provider, label: selectedPart.provider };
@@ -253,14 +265,15 @@ export default function NewModalParts({ isOpen, onClose, selectedPart }: any) {
                                                         value={option}
                                                         options={[option]} // Add options as needed
                                                         placeholder="Furnizor..."
-                                                        isDisabled
+                                                        isDisabled 
+                                                        className="text-black"
                                                     />
                                                 )
                                             }}
                                         </Field>
                                     </FormItem>
                                     {/* TODO ????????? */}
-                                    <FormItem className="md:col-span-2 [&>label]:text-red-600 mb-2 md:mb-4" label="Hala/Zona">
+                                    <FormItem className="md:col-span-2 [&>label]:text-slate-600 mb-2 md:mb-4" label="Hala/Zona">
                                         <Field name="location">
                                             {({ field }: FieldProps) => {
                                                 const option = { value: selectedPart.location, label: selectedPart.location };
@@ -270,57 +283,62 @@ export default function NewModalParts({ isOpen, onClose, selectedPart }: any) {
                                                         value={option}
                                                         options={[option]} // Add options as needed
                                                         placeholder="Hala/Zona..."
-                                                        isDisabled
+                                                        isDisabled 
+                                                        className="text-black"
                                                     />
                                                 )
 
                                             }}
                                         </Field>
                                     </FormItem>
-                                    <FormItem className="md:col-span-1 [&>label]:text-red-600 mb-2 md:mb-4" label="Rastel">
+                                    <FormItem className="md:col-span-1 [&>label]:text-slate-600 mb-2 md:mb-4" label="Rastel">
                                         <Field name="shelf1">
                                             {({ field }: FieldProps) => (
                                                 <Input
                                                     {...field}
                                                     type="text"
                                                     placeholder="Rastel..."
-                                                    disabled
+                                                    disabled 
+                                                    className="text-black"
                                                 />
                                             )}
                                         </Field>
                                     </FormItem>
-                                    <FormItem className="md:col-span-1 [&>label]:text-red-600 mb-2 md:mb-4" label="Etaj">
+                                    <FormItem className="md:col-span-1 [&>label]:text-slate-600 mb-2 md:mb-4" label="Etaj">
                                         <Field name="floor">
                                             {({ field }: FieldProps) => (
                                                 <Input
                                                     {...field}
                                                     type="text"
                                                     placeholder="Etaj..."
-                                                    disabled
+                                                    disabled 
+                                                    className="text-black"
                                                 />
                                             )}
                                         </Field>
                                     </FormItem>
-                                    <FormItem className="md:col-span-1 [&>label]:text-red-600 mb-2 md:mb-4" label="Raft">
+                                    <FormItem className="md:col-span-1 [&>label]:text-slate-600 mb-2 md:mb-4" label="Raft">
                                         <Field name="shelf2">
                                             {({ field }: FieldProps) => (
                                                 <Input
                                                     {...field}
                                                     type="text"
                                                     placeholder="Raft..."
-                                                    disabled
+                                                    disabled 
+                                                    className="text-black"
                                                 />
                                             )}
                                         </Field>
                                     </FormItem>
-                                    <FormItem className="md:col-span-1 [&>label]:text-red-600 mb-2 md:mb-4" label="PO">
+                                    <FormItem className="md:col-span-1 [&>label]:text-slate-600 mb-2 md:mb-4" label="PO">
                                         <Field name="po">
                                             {({ field }: FieldProps) => (
                                                 <Input
                                                     {...field}
                                                     type="text"
                                                     placeholder="PO..."
-                                                    disabled
+                                                    disabled 
+                                                    className="text-black"
                                                 />
                                             )}
                                         </Field>
@@ -329,14 +347,15 @@ export default function NewModalParts({ isOpen, onClose, selectedPart }: any) {
 
                                 {/* Other Inputs */}
                                 <div className="grid grid-cols-1">
-                                    <FormItem className="md:col-span-1 [&>label]:text-red-600 mb-2 md:mb-4" label="Observatii INTERNE">
+                                    <FormItem className="md:col-span-1 [&>label]:text-slate-600 mb-2 md:mb-4" label="Observatii INTERNE">
                                         <Field name="internalDescription">
                                             {({ field }: FieldProps) => (
                                                 <Input
                                                     {...field}
                                                     type="text"
                                                     placeholder="Observatii..."
-                                                    disabled
+                                                    disabled 
+                                                    className="text-black"
                                                 />
                                             )}
                                         </Field>
@@ -344,14 +363,15 @@ export default function NewModalParts({ isOpen, onClose, selectedPart }: any) {
                                 </div>
 
                                 <div className="grid grid-cols-1">
-                                    <FormItem className="md:col-span-1 [&>label]:text-red-600 mb-2 md:mb-4" label="OBSERVATII (Informatii PUBLICE)">
+                                    <FormItem className="md:col-span-1 [&>label]:text-slate-600 mb-2 md:mb-4" label="OBSERVATII (Informatii PUBLICE)">
                                         <Field name="externalDescription">
                                             {({ field }: FieldProps) => (
                                                 <Input
                                                     {...field}
                                                     textArea
                                                     placeholder="Observatii..."
-                                                    disabled
+                                                    disabled 
+                                                    className="text-black"
                                                 />
                                             )}
                                         </Field>
@@ -360,31 +380,31 @@ export default function NewModalParts({ isOpen, onClose, selectedPart }: any) {
 
                                 {/* Codes */}
                                 <div className="grid grid-cols-1 md:grid-cols-4 md:gap-3">
-                                    <FormItem className="[&>label]:text-red-600 mb-2 md:mb-4" label="Cod 1">
+                                    <FormItem className="[&>label]:text-slate-600 mb-2 md:mb-4" label="Cod 1">
                                         <Field name="code1">
                                             {({ field }: FieldProps) => (
-                                                <Input {...field} type="text" placeholder="Cod 1..." disabled />
+                                                <Input {...field} type="text" placeholder="Cod 1..." disabled className="text-black"/>
                                             )}
                                         </Field>
                                     </FormItem>
-                                    <FormItem className="[&>label]:text-red-600 mb-2 md:mb-4" label="Cod 2">
+                                    <FormItem className="[&>label]:text-slate-600 mb-2 md:mb-4" label="Cod 2">
                                         <Field name="code2">
                                             {({ field }: FieldProps) => (
-                                                <Input {...field} type="text" placeholder="Cod 2..." disabled />
+                                                <Input {...field} type="text" placeholder="Cod 2..." disabled className="text-black"/>
                                             )}
                                         </Field>
                                     </FormItem>
-                                    <FormItem className="[&>label]:text-red-600 mb-2 md:mb-4" label="Cod 3">
+                                    <FormItem className="[&>label]:text-slate-600 mb-2 md:mb-4" label="Cod 3">
                                         <Field name="code3">
                                             {({ field }: FieldProps) => (
-                                                <Input {...field} type="text" placeholder="Cod 3..." disabled />
+                                                <Input {...field} type="text" placeholder="Cod 3..." disabled className="text-black"/>
                                             )}
                                         </Field>
                                     </FormItem>
-                                    <FormItem className="[&>label]:text-red-600 mb-2 md:mb-4" label="Cod 4">
+                                    <FormItem className="[&>label]:text-slate-600 mb-2 md:mb-4" label="Cod 4">
                                         <Field name="code4">
                                             {({ field }: FieldProps) => (
-                                                <Input {...field} type="text" placeholder="Cod 4..." disabled />
+                                                <Input {...field} type="text" placeholder="Cod 4..." disabled className="text-black"/>
                                             )}
                                         </Field>
                                     </FormItem>
@@ -400,7 +420,7 @@ export default function NewModalParts({ isOpen, onClose, selectedPart }: any) {
                                                         {...field}
                                                         checked={field.value} // Set 'checked' for checkboxes
                                                         onChange={(value) => form.setFieldValue(field.name, value)}
-                                                        className="text-red-600 [&>span]:!opacity-100 [&>input]:!bg-gray-300"
+                                                        className="text-slate-600 [&>span]:!opacity-100 [&>input]:!bg-gray-300"
                                                         disabled
                                                     >
                                                         Afiseaza pe AUTOVIT daca indeplineste conditiile
@@ -431,7 +451,7 @@ export default function NewModalParts({ isOpen, onClose, selectedPart }: any) {
                                                     {...field}
                                                     checked={field.value} // Set 'checked' for checkboxes
                                                     onChange={(value) => form.setFieldValue(field.name, value)}
-                                                    className="text-red-600 [&>span]:!opacity-100 [&>input]:!bg-gray-300"
+                                                    className="text-slate-600 [&>span]:!opacity-100 [&>input]:!bg-gray-300"
                                                     disabled
                                                 >
                                                     Necesita Reconditionare
