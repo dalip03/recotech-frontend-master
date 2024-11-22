@@ -115,6 +115,21 @@ export const updateUser = async (userData: any, userId: any) => {
     }
 }
 
+export const deleteUser = async (userId: any) => {
+    try {
+        const response = await axios.delete(`${API_URL}/users/${userId}`, {
+            headers: AUTH_HEADER,
+        });
+        toastNotification.success('Utilizator șters cu succes!');
+        return response.data;
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        toastNotification.error('Nu s-a putut șterge utilizatorul');
+        throw error;
+    }
+};
+
+
 export const updateUserPoints = async (points: any, userId: any) => {
     try {
         const response = await axios.patch(`${API_URL}/users/${userId}/points`, points, {

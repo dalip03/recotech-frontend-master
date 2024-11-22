@@ -3,7 +3,8 @@ import { useEffect, useMemo, useState } from 'react'
 import { HiPencil, HiTrash } from 'react-icons/hi'
 import CustomTable from '../../components/common/CustomTable'
 import ModalAddUser from './components/modals/ModalAddUser'
-import { fetchUsers } from '@/api/userService'
+import ModalDelete from '@/components/common/ModalDelete'
+import { deleteUser, fetchUsers } from '@/api/userService'
 import { t } from 'i18next'
 import CustomTableSSRPagination from '@/components/common/CustomTabeSSRPagination'
 import { getTranslatedRole } from '@/utils/sharedHelpers'
@@ -11,10 +12,12 @@ import CustomDropdown from '@/components/common/CustomDropdown'
 import { fetchUserFavoriteProjects, fetchUserFavoriteProjectsByUserId } from '@/api/projectService'
 
 const Utilizatori = () => {
-    const [modalData, setModalData] = useState<any>({
+    const [modalData, setModalData] = useState({
         isOpen: false,
+        isOpenDelete: false,
         selectedUser: null,
     })
+
     const [data, setData] = useState<any>({
         users: [],
         pageIndex: 0,
@@ -64,10 +67,30 @@ const Utilizatori = () => {
         }))
     }
 
-    const handleDelete = () => {
-        console.log('Delete')
+    // const handleDelete = () => {
+    //     console.log('Delete')
+    // }
+
+    const handleDelete = (id: any) => {
+        setModalData((prev: any) => ({
+            ...prev,
+            selectedUser: data.users.find((user: any) => user.id == id),
+            isOpenDelete: true
+        }))
     }
 
+    const handleConfirmDelete = async () => {
+        if (modalData.selectedUser) {
+            // @ts-ignore
+            await deleteUser(modalData.selectedUser.id);
+            await getData();
+            setModalData((prev: any) => ({
+                ...prev,
+                isOpenDelete: false,
+                selectedUser: null
+            }))
+        }
+    }
     const handleOpenModal = () => {
         setModalData((prev: any) => ({
             ...prev,
@@ -116,7 +139,7 @@ const Utilizatori = () => {
             cell: ({ row }: any) => {
                 const rowActions = [
                     { eventKey: `${row.original.id}_edit`, label: t("Edit"), onClick: () => handleEdit(row.original.id) },
-                    // { eventKey: `${row.original.id}_delete`, label: t("Delete"), onClick: () => handleDelete(row.original.id) },
+                    { eventKey: `${row.original.id}_delete`, label: t("Delete"), onClick: () => handleDelete(row.original.id) },
                 ]
                 return (
                     <div className="flex space-x-2">
@@ -160,6 +183,16 @@ const Utilizatori = () => {
             {modalData.isOpen && (
                 <div>
                     <ModalAddUser isOpen={modalData.isOpen} onClose={handleCloseModal} userData={modalData.selectedUser} />
+                </div>
+            )}
+            {modalData.isOpenDelete && (
+                <div>
+                    <ModalDelete
+                        isOpen={modalData.isOpenDelete}
+                        message={t("deleteMessage.Are you sure you want to delete this user?")}
+                        onConfirmDelete={handleConfirmDelete}
+                        onClose={() => setModalData((prevModalData) => ({ ...prevModalData, isOpenDelete: false, selectedUser: null }))}
+                    />
                 </div>
             )}
         </div>
