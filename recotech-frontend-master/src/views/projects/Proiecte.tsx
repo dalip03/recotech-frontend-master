@@ -129,7 +129,7 @@ export default function Proiecte() {
     const fetchProjectsData = async () => {
         try {
             // Fetch projects based on user role, with default empty array fallback
-            const projects = hasAccess(userRole, ['ADMIN'])
+            const projects = hasAccess(userRole, ['ADMIN', 'RECEPTION'])
                 ? await fetchProjects()
                 : await fetchUserProjects()
             const validProjects = projects || [] // Ensure we have an empty array if no projects are fetched
@@ -319,10 +319,19 @@ export default function Proiecte() {
                     : '-'
             },
         },
+
+        
+        ...(userRole !== 'RECEPTION' ? [
         {
+            
             header: t('Actions'),
             accessorKey: 'actiuni',
-            cell: ({ row }) => {
+            cell: ({ row }: any) => {
+
+                // Check if the user's role is not RECEPTION
+                if (!hasAccess(userRole as UserRole, ['ADMIN'])) {
+                    return null; // Return nothing if the user is a RECEPTION
+                }
                 // TODO implement this to the end when favorite functionality is finished
                 const rowActions = []
                 if (hasAccess(userRole as UserRole, ['ADMIN'])) {
@@ -372,6 +381,7 @@ export default function Proiecte() {
                 )
             },
         },
+    ] : []),
     ]
 
     if (loading) {
@@ -385,7 +395,7 @@ export default function Proiecte() {
     return (
         <div>
             <div>
-            <h3 className="pb-4 pt-4 font-bold ">{t('Projects')}</h3>
+                <h3 className="pb-4 pt-4 font-bold ">{t('Projects')}</h3>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4">
                 <Card
@@ -470,7 +480,7 @@ export default function Proiecte() {
             </div>
             {hasAccess(userRole as UserRole, ['ADMIN', 'PIESAR']) && (
                 <div className="">
-                   <h3 className="pb-4 pt-4 font-bold ">{t('Favorite Projects')}</h3>
+                    <h3 className="pb-4 pt-4 font-bold ">{t('Favorite Projects')}</h3>
                     <div
                         style={{
                             border: '1px solid #d1d5db',
@@ -498,7 +508,7 @@ export default function Proiecte() {
                 </div>
             )}
             <div className="">
-            <h3 className="pb-4 pt-4 font-bold ">{t('All Projects')}</h3>
+                <h3 className="pb-4 pt-4 font-bold ">{t('All Projects')}</h3>
                 <div
                     className="mt-2"
                     style={{
@@ -507,11 +517,12 @@ export default function Proiecte() {
                         padding: '16px',
                     }}
                 >
-                    <CustomTable
-                        columns={columns}
-                        data={data.projects}
-                        actionButton={
-                            hasAccess(userRole, ['ADMIN', 'RECEPTION']) && (
+                    {hasAccess(userRole, ['ADMIN', 'RECEPTION']) && (
+                        <CustomTable
+                            columns={columns}
+                            data={data.projects}
+                            actionButton={
+
                                 <Link to={'/proiecte/nou'}>
                                     <Button
                                         style={{
@@ -522,9 +533,10 @@ export default function Proiecte() {
                                         {t('Add Projects')}
                                     </Button>
                                 </Link>
-                            )
-                        }
-                    />
+
+                            }
+                        />
+                    )}
                 </div>
             </div>
             <div>

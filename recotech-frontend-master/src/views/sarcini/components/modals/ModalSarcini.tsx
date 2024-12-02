@@ -104,6 +104,7 @@ export default function ModalSarcini({ isOpen, onClose, handleSubmit, data, proj
                 projects,
                 projectTypes,
             }));
+            console.log(modalData)
             const formValues = initializeFormValues(projects);
             setFormValues(formValues);
         }

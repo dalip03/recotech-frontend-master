@@ -38,6 +38,7 @@ function useAuth() {
         try {
             const resp = await apiSignIn(values)
             if (resp.data) {
+                // console.log("Response " , resp.data)
                 const { token } = resp.data
                 dispatch(signInSuccess(token))
                 localStorage.setItem('token', token);
@@ -47,7 +48,7 @@ function useAuth() {
                 const userEmail = parseJwt(token).sub; // The user email embedded in the jwt
                 const users = await fetchUsersWithToken(token);
                 const user = users.find((user: any) => user.username === userEmail) ?? null;
-
+               
                 if (user.profilePictureKey) {
                     const file = await fetchUserProfilePicture(user.profilePictureKey, token).then(async (file: any) => await blobToBase64(file))
                     user.profilePicture = file

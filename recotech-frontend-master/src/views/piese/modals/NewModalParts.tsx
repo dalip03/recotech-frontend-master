@@ -73,10 +73,10 @@ export default function NewModalParts({ isOpen, onClose, selectedPart }: any) {
                                                 const option = { value: selectedPart.brand, label: selectedPart.brand };
                                                 return (
                                                     <Select
-                                                        className="text-black"
+                                                    className="text-black"
                                                         {...field}
                                                         value={option}
-                                                        options={[selectedPart.brand]} // Add options as needed
+                                                        options={[option]} // Add options as needed
                                                         placeholder="Marca..."
                                                         isDisabled
                                                     />

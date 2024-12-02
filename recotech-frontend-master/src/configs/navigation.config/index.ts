@@ -135,7 +135,7 @@ const navigationConfig: NavigationTree[] = [
                 translateKey: 'Project Types',
                 icon: '',
                 type: NAV_ITEM_TYPE_ITEM,
-                authority: ['SUPER_ADMIN', 'ADMIN'],
+                authority: ['SUPER_ADMIN', 'ADMIN','RECEPTION'],
                 subMenu: [],
             },
             {

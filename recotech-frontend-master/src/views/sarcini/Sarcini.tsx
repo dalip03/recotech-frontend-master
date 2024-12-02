@@ -27,6 +27,7 @@ import { Link } from 'react-router-dom'
 import { sendNotification } from '@/api/notificationService'
 import { NotificationType } from '@/components/template/Notification'
 import { getProjectById } from '@/api/projectService'
+import { all } from 'axios'
 
 const Sarcini = () => {
     const [data, setData] = useState<any>({
@@ -48,7 +49,10 @@ const Sarcini = () => {
         try {
             // Fetch tasks and filter out templates
             const allTasks = await fetchTasks();
-            const tasks = allTasks.filter((task: any) => task.template !== true);
+            console.log("allTasks",allTasks)
+            const tasks = allTasks
+            // const tasks = allTasks.filter((task: any) => task.template !== true);
+            console.log("tasks",tasks)
 
             // Fetch users
             const usersData = await fetchUsers();
@@ -58,6 +62,7 @@ const Sarcini = () => {
             const extendedTasks = await Promise.all(
                 tasks.map(async (task: any) => {
                     const project = await getProjectById(task.projectId); // Fetch each project by its ID
+                    console.log("projectId", task.projectId)
                     return {
                         ...task,
                         createdBy: users.find((user: any) => String(user.id) === String(task.createdBy)),
@@ -83,6 +88,7 @@ const Sarcini = () => {
                 assignedTo: task.assignedTo
             }));
 
+            console.log("formattedData",formattedData)
             // Filter for user's assigned tasks and set state
             setData({
                 allTasks: formattedData,
@@ -288,6 +294,7 @@ const Sarcini = () => {
     }
 
     const handleSubmit = async (taskData: any) => {
+        // console.log("worked handle submit")
         const taskId = taskData.id;
         const submitObject: any = {
             name: taskData.taskTitle,
@@ -299,7 +306,7 @@ const Sarcini = () => {
             assignedToId: taskData.assignedTo,
             template: modalSettings.selectedTask?.template || false,
         }
-
+        // console.log("submitObject ->>>>>>>", submitObject)
         if (modalSettings.selectedTask && modalSettings.selectedTask.assignedTo.length > 0) {
             modalSettings.selectedTask.assignedTo.forEach(async (userId: number) => {
                 await removeTaskAssignee(userId, taskId);
@@ -329,7 +336,9 @@ const Sarcini = () => {
         } else {
             const additionalUsers = submitObject.assignedToId.slice(1);
             submitObject.assignedToId = submitObject.assignedToId[0];
+            console.log("result1",submitObject )
             const result: any = await saveTask(submitObject);
+            console.log("result2" , result)
             additionalUsers.forEach(async (userId: any) => {
                 await updateTaskAssignee(userId, result.data.id);
                 await handleOperatorAddedToProject(taskData.projectId, userId);
@@ -342,7 +351,6 @@ const Sarcini = () => {
     // Common Methods 
     const handleDelete = async (id: string) => {
         setModalSettings({ ...modalSettings, isOpenDelete: true, selectedTask: data.allTasks.find((sarcina: any) => sarcina.id === id) });
-
     };
 
     const handleConfirmDelete = async () => {
@@ -378,7 +386,7 @@ const Sarcini = () => {
             <div>
                 <div>
                 <h3 className="pb-4 pt-4 font-bold ">
-                        {t("All Tasks")}
+                        {t("All Tasks")}    
                     </h3>
                 </div>
                 <div
