@@ -34,7 +34,7 @@ export const hasAccess = (userRole: UserRole, roles: NonSuperAdminRoles[]) => {
     if (userRole === 'SUPER_ADMIN') {
         return true;
     }
-
+ 
     // If no roles are specified, grant access (default behavior)
     if (roles.length === 0) {
         return true;
