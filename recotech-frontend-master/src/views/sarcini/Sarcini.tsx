@@ -299,7 +299,7 @@ const Sarcini = () => {
         const submitObject: any = {
             name: taskData.taskTitle,
             description: taskData.description,
-            status: taskData ?? 'TODO',
+            status: 'IN_PROGRESS',
             priority: 'LOW',
             projectId: taskData.projectId,
             type: taskData.projectType,
