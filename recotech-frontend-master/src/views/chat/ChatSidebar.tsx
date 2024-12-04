@@ -20,8 +20,8 @@ const Sidebar = ({ onUserSelect, friendsList }: any) => {
     };
 
     return (
-        <div className="lg:block bg-white h-[80vh] overflow-hidden shadow-md p-4 lg:rounded-l-xl">
-            <div className="relative mb-4">
+        <div className="lg:block  bg-white h-[80vh] overflow-hidden shadow-md p-4 lg:rounded-l-xl">
+            <div className="relative">
                 <input
                     type="text"
                     className="w-full border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring focus:ring-blue-500"
@@ -36,7 +36,7 @@ const Sidebar = ({ onUserSelect, friendsList }: any) => {
                 </div>
             </div>
 
-            <ul className="h-[90%] overflow-y-auto">
+            <ul className="h-[90%] overflow-y-auto pt-4">
                 {filteredUsers.map((contact: any) => {
                     return (
                         <li
