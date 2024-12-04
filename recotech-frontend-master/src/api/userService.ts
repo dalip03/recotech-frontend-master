@@ -120,6 +120,8 @@ export const updateUser = async (userData: any, userId: any) => {
 export const deleteUser = async (userId: any) => {
     try {
         console.log("working on deleting a user ");
+        // console.log("API_URL - ",API_URL,"user id - ", userId)
+
         const response = await axios.delete(`${API_URL}/users/${userId}`, {
             headers: AUTH_HEADER,
         });
