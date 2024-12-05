@@ -159,8 +159,10 @@ export default function ModalConstatari({ isOpen, onClose, handleSubmit, data, p
                 onSubmit={(values) => handleSubmit(values)}
             >
                 {({ setFieldValue, errors, touched, values }) => (
+                                            <div className="max-h-[70vh] w-full overflow-y-auto space-y-5 p-5">
+
                     <Form className="p-4">
-                        <div className='max-h-[40rem] overflow-y-auto'>
+                        
                             <FormContainer className="text-left">
                                 <h5 className="mb-4">
                                     <FormItem
@@ -705,7 +707,7 @@ export default function ModalConstatari({ isOpen, onClose, handleSubmit, data, p
                                 </FormItem>
                             </FormContainer>
 
-                        </div>
+                      
 
 
                         {/* Buttons */}
@@ -720,6 +722,7 @@ export default function ModalConstatari({ isOpen, onClose, handleSubmit, data, p
                             )}
                         </div>
                     </Form>
+                    </div>
                 )}
             </Formik>
         </Dialog>

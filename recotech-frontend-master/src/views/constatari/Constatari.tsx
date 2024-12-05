@@ -453,8 +453,8 @@ const Constatari = () => {
     ]
 
     return (
-        <div>
-            <div>
+        <div >
+            <div >
             <h3 className="pb-4 pt-4 font-bold ">{t("Statements")}</h3>
             </div>
             <div
@@ -463,6 +463,7 @@ const Constatari = () => {
                     border: '1px solid #d1d5db',
                     borderRadius: '8px',
                     padding: '16px',
+                    minHeight:'20rem'
                 }}
             >
                 <CustomTable
