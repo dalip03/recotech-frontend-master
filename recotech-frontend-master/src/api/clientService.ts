@@ -76,17 +76,17 @@ export const updateClient = async (clientId: number, updatedClient: any) => {
     }
 }
 
-// export const deleteClient = async (clientId: any) => {
-//     try {
-//         const response = await axios.delete(`${API_URL}/clients/${clientId}`, {
-//             headers: AUTH_HEADER,
-//         })
-//         return response.data
-//     } catch (error: any) {
-//         console.error(
-//             'Error adding client:',
-//             error.response ? error.response.data : error.message,
-//         )
-//         throw error
-//     }
-// }
+export const deleteClient = async (clientId: any) => {
+    try {
+        const response = await axios.delete(`${API_URL}/clients/${clientId}`, {
+            headers: AUTH_HEADER,
+        })
+        return response.data
+    } catch (error: any) {
+        console.error(
+            'Error deleting client:',
+            error.response ? error.response.data : error.message,
+        )
+        throw error
+    }
+}

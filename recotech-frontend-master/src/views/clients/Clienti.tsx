@@ -4,7 +4,7 @@ import { HiPencil, HiTrash } from 'react-icons/hi'
 import CustomTable from '../../components/common/CustomTable'
 import ModalAddClienti from './ModalAddClienti'
 import ModalDelete from '../../components/common/ModalDelete'
-import { addClient, fetchClients, updateClient } from '../../api/clientService'
+import { addClient, fetchClients, updateClient, deleteClient } from '../../api/clientService'
 import { useNavigate } from 'react-router-dom'
 import { t } from 'i18next'
 import CustomDropdown from '@/components/common/CustomDropdown'
@@ -98,6 +98,7 @@ const Clienti = () => {
             cell: ({ row }: any) => {
                 const rowActions = [
                     { eventKey: `${row.original.id}_edit`, label: t("Edit"), onClick: () => handleEdit(row.original.id) },
+                    { eventKey: `${row.original.id}_delete`, label: t("Delete"), onClick: () => handleDeleteClick(row.original.id) },
                 ]
                 return (
                     <div className="flex space-x-2">
@@ -117,14 +118,34 @@ const Clienti = () => {
         }))
     }
 
-    const handleConfirmDelete = () => {
+    // const handleConfirmDelete = () => {
 
-        setModalSettings((prevModalSettings: any) => ({
-            ...prevModalSettings,
-            isOpenDelete: false,
-            selectedClient: null,
-        }))
-    }
+    //     setModalSettings((prevModalSettings: any) => ({
+    //         ...prevModalSettings,
+    //         isOpenDelete: false,
+    //         selectedClient: null,
+    //     }))
+    // }
+
+    const handleConfirmDelete = async () => {
+        if (modalSettings.selectedClient) {
+            try {
+                await deleteClient(modalSettings.selectedClient.id); // Call the API to delete the client
+                await fetchUserData(); // Refresh the client data
+                alert(t('Client deleted successfully.'));
+            } catch (error) {
+                console.error('Error deleting client:', error);
+                alert(t('An error occurred while deleting the client.'));
+            } finally {
+                setModalSettings((prevModalSettings: any) => ({
+                    ...prevModalSettings,
+                    isOpenDelete: false,
+                    selectedClient: null,
+                }));
+            }
+        }
+    };
+    
 
   
     const handleCancelDelete = () => {

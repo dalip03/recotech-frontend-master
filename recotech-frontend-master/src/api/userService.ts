@@ -103,6 +103,8 @@ export const saveUser = async (userData: any) => {
 
 export const updateUser = async (userData: any, userId: any) => {
     try {
+        // console.log("working on updating  a user ", userData ,userId);
+
         const response = await axios.put(`${API_URL}/users/${userId}`, userData, {
             headers: AUTH_HEADER,
         })
@@ -117,6 +119,9 @@ export const updateUser = async (userData: any, userId: any) => {
 
 export const deleteUser = async (userId: any) => {
     try {
+        console.log("working on deleting a user ");
+        // console.log("API_URL - ",API_URL,"user id - ", userId)
+
         const response = await axios.delete(`${API_URL}/users/${userId}`, {
             headers: AUTH_HEADER,
         });

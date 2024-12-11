@@ -89,7 +89,23 @@ export default function ModalSarcini({ isOpen, onClose, handleSubmit, data, proj
     useEffect(() => {
         async function fetchData() {
             const usersData = await fetchUsers();
+            
             const users = usersData.data.content;
+            // console.log(users);
+            // const updatedUsers = [
+            //     { 
+            //         id: 2, 
+            //         firstName: "abcd", 
+            //         lastName: "sdfsdf", 
+            //         role: "dsfs", 
+            //         username: "sdfsdfs", 
+            //         blackPoints: 0, 
+            //         whitePoints: 0 
+            //     },
+            //     ...users,
+            // ];
+            // console.log(updatedUsers);
+            // users = updatedUsers;
             const projects = await fetchProjects();
             const projectTypesData = await fetchProjectTypes();
             const projectTypes = projectTypesData.map((projectType: any) => ({
@@ -104,6 +120,7 @@ export default function ModalSarcini({ isOpen, onClose, handleSubmit, data, proj
                 projects,
                 projectTypes,
             }));
+            console.log(modalData)
             const formValues = initializeFormValues(projects);
             setFormValues(formValues);
         }
@@ -213,8 +230,8 @@ export default function ModalSarcini({ isOpen, onClose, handleSubmit, data, proj
                                                 <div className="flex items-center gap-5 justify-between">
                                                     <label className="text-sm text-muted-foreground">Status</label>
                                                     <Badge
-                                                        className="p-2 rounded-lg bg-[#AAAAAA] text-white hover:cursor-not-allowed"
-                                                        content={data?.status || 'TODO >'}
+                                                        className="p-2 px-4 rounded-lg bg-[#AAAAAA] text-white hover:cursor-not-allowed"
+                                                        content={data?.status || '   TODO   '}
                                                     />
                                                 </div>
                                             )}
@@ -225,15 +242,16 @@ export default function ModalSarcini({ isOpen, onClose, handleSubmit, data, proj
                                             invalid={Boolean(errors.assignedTo && touched.assignedTo)}
                                             errorMessage={String(errors.assignedTo)}
                                         >
-                                            <Field name="assignedTo">
+                                        {/* without unassigned  */}
+                                           {/* <Field name="assignedTo">
                                                 {({ field, form }: FieldProps) => {
-                                                    const options = modalData.users.map((user: any) => ({
+                                                    const options = modalData.updatedUsers.map((user: any) => ({
                                                         value: user.id,
                                                         label: `${user.firstName} ${user.lastName}`,
                                                     }));
 
                                                     const selectedOptions = field.value
-                                                        .map((userId: number) => options.find((option: any) => option.value === userId))
+                                                        .map((userId: number | string) => options.find((option: any) => option.value === userId))
                                                         .filter(Boolean); // Filter out any undefined values
 
                                                     return (
@@ -251,7 +269,49 @@ export default function ModalSarcini({ isOpen, onClose, handleSubmit, data, proj
                                                         />
                                                     );
                                                 }}
-                                            </Field>
+                                            </Field> */}
+
+
+                                        {/* with unassign  */}
+                                        <Field name="assignedTo">
+    {({ field, form }: FieldProps) => {
+        // Prepare the dropdown options
+        const options = [
+            { value: -1, label: "Unassigned", }, // Add "Unassigned" as a dropdown option
+            ...modalData.users.map((user: any) => ({
+                value: user.id,
+                label: `${user.firstName} ${user.lastName}`,
+            })),
+        ];
+
+        // Map the current value to the selected options
+        const selectedOptions = field.value
+            .map((userId: number | string) => options.find((option: any) => option.value === userId))
+            .filter(Boolean); // Filter out any undefined values
+
+        return (
+            <Select
+                {...field}
+                options={options}
+                value={selectedOptions}
+                isMulti
+                onChange={(selectedOptions) => {
+                    const selectedUserIds = selectedOptions.map((option: any) => option.value);
+
+                    // If "Unassigned" is selected, clear other selections
+                    if (selectedUserIds.includes("unassigned")) {
+                        form.setFieldValue(field.name, ["unassigned"]);
+                    } else {
+                        // Otherwise, remove "Unassigned" if it exists
+                        const filteredUserIds = selectedUserIds.filter((id) => id !== "unassigned");
+                        form.setFieldValue(field.name, filteredUserIds);
+                    }
+                }}
+                placeholder="Select "
+            />
+        );
+    }}
+</Field>
 
                                         </FormItem>
 

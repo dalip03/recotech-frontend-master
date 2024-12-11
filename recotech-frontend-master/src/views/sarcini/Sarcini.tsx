@@ -27,11 +27,13 @@ import { Link } from 'react-router-dom'
 import { sendNotification } from '@/api/notificationService'
 import { NotificationType } from '@/components/template/Notification'
 import { getProjectById } from '@/api/projectService'
+import { all } from 'axios'
 
 const Sarcini = () => {
     const [data, setData] = useState<any>({
         allTasks: [],
         myTasks: [],
+        unassignedTasks: [],
     });
     const [modalSettings, setModalSettings] = useState<any>({
         isOpen: false,
@@ -48,7 +50,11 @@ const Sarcini = () => {
         try {
             // Fetch tasks and filter out templates
             const allTasks = await fetchTasks();
-            const tasks = allTasks.filter((task: any) => task.template !== true);
+            // console.log("allTasks",allTasks)
+            const tasks = allTasks
+            // const tasks = allTasks.filter((task: any) => task.template !== true);
+            // console.log("tasks",tasks)
+            const unassignedTask = allTasks;
 
             // Fetch users
             const usersData = await fetchUsers();
@@ -58,6 +64,7 @@ const Sarcini = () => {
             const extendedTasks = await Promise.all(
                 tasks.map(async (task: any) => {
                     const project = await getProjectById(task.projectId); // Fetch each project by its ID
+                    // console.log("projectId", task.projectId)
                     return {
                         ...task,
                         createdBy: users.find((user: any) => String(user.id) === String(task.createdBy)),
@@ -83,19 +90,22 @@ const Sarcini = () => {
                 assignedTo: task.assignedTo
             }));
 
+            // console.log("formattedData",formattedData)
             // Filter for user's assigned tasks and set state
             setData({
                 allTasks: formattedData,
+                unassignedTasks : formattedData.filter((task: any) => task.assignedTo.length === 0 || task.assignedTo === null || task.assignedTo === -1 || task.assignedTo === '-1'),
                 myTasks: formattedData.filter((task: any) =>
                     task.assignedTo.some((assignedUser: any) => String(assignedUser.id) === String(user.id))
                 ),
             });
-
+            
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     };
-
+    // console.log("AllTasks" , data.allTasks)
+    // console.log("unassignedTasks" , data.unassignedTasks)
 
     useEffect(() => {
         const fetchAllData = async () => {
@@ -154,6 +164,60 @@ const Sarcini = () => {
                 return (row.original.assignedTo) ? row.original.assignedTo.map((user: any) => `${user.lastName} ${user.firstName}`).join(', ') : '-'
             }
         },
+        {
+            header: t("Status"),
+            accessorKey: 'status',
+        },
+        {
+            header: t("Deadline"),
+            accessorKey: 'deadline',
+            cell: ({ row }: any) => {
+                return (row.original.deadline) ? new Date(row.original.deadline).toLocaleDateString() : '-'
+            }
+        },
+        {
+            header: t("Actions"),
+            accessorKey: 'actiuni',
+            cell: ({ row }: any) => {
+                const rowActions = [
+                    { eventKey: `${row.original.id}_edit`, label: t("Edit"), onClick: () => handleEdit(row.original.id) },
+                ]
+                if (hasAccess(user.authority as UserRole, ['ADMIN'])) {
+                    rowActions.push({ eventKey: `${row.original.id}_delete`, label: t("Delete"), onClick: () => handleDelete(row.original.id) })
+                }
+                !row.original.assignedTo.includes(user.id) && rowActions.push({ eventKey: `${row.original.id}_assign`, label: t("Self Assign Task"), onClick: () => handleAssignTaskToSelf(row.original.id) })
+                return (
+                    <div className="flex space-x-2">
+                        <CustomDropdown items={rowActions} />
+                    </div>
+                )
+            },
+        },
+    ]
+    const unassignedTasksColumns = [
+        {
+            header: 'ID',
+            accessorKey: 'id',
+        },
+        {
+            header: t("Project"),
+            accessorKey: 'project',
+            cell: ({ row }: any) => {
+                return (
+                    row.original.project && (
+                        <Link className='text-blue-500 hover:text-blue-300' to={`/proiecte/${row.original.project.id}`}>
+                            {row.original.project.name}
+                        </Link>
+                    ) || ('-')
+                )
+            }
+        },
+        {
+            header: t("Name"),
+            accessorKey: 'name',
+        },
+        // TODO refactor post relationship integration
+        
         {
             header: t("Status"),
             accessorKey: 'status',
@@ -288,18 +352,20 @@ const Sarcini = () => {
     }
 
     const handleSubmit = async (taskData: any) => {
+        // console.log("worked handle submit")
+        
         const taskId = taskData.id;
         const submitObject: any = {
             name: taskData.taskTitle,
             description: taskData.description,
-            status: taskData ?? 'TODO',
+            status: 'IN_PROGRESS',
             priority: 'LOW',
             projectId: taskData.projectId,
             type: taskData.projectType,
             assignedToId: taskData.assignedTo,
             template: modalSettings.selectedTask?.template || false,
         }
-
+        // console.log("submitObject ->>>>>>>", submitObject)
         if (modalSettings.selectedTask && modalSettings.selectedTask.assignedTo.length > 0) {
             modalSettings.selectedTask.assignedTo.forEach(async (userId: number) => {
                 await removeTaskAssignee(userId, taskId);
@@ -329,7 +395,9 @@ const Sarcini = () => {
         } else {
             const additionalUsers = submitObject.assignedToId.slice(1);
             submitObject.assignedToId = submitObject.assignedToId[0];
+            // console.log("result1",submitObject )
             const result: any = await saveTask(submitObject);
+            // console.log("result2" , result)
             additionalUsers.forEach(async (userId: any) => {
                 await updateTaskAssignee(userId, result.data.id);
                 await handleOperatorAddedToProject(taskData.projectId, userId);
@@ -342,7 +410,6 @@ const Sarcini = () => {
     // Common Methods 
     const handleDelete = async (id: string) => {
         setModalSettings({ ...modalSettings, isOpenDelete: true, selectedTask: data.allTasks.find((sarcina: any) => sarcina.id === id) });
-
     };
 
     const handleConfirmDelete = async () => {
@@ -356,7 +423,7 @@ const Sarcini = () => {
             <div>
             <h3 className="pb-4 pt-4 font-bold ">{t("Tasks")}</h3>
             </div>
-            <TaskStatistics />
+            <TaskStatistics  unassigndata={data.unassignedTasks} data={data.myTasks}/>
             <div>
                 <div>
                     <h3 className="pb-4 pt-4 font-bold ">
@@ -377,8 +444,28 @@ const Sarcini = () => {
             </div>
             <div>
                 <div>
+                    <h3 className="pb-4 pt-4 font-bold ">
+                        {t("Unassigned Tasks")}
+                    </h3>
+                </div>
+                <div
+                  
+                    style={{
+                        border: '1px solid #d1d5db',
+                        borderRadius: '8px',
+                        padding: '16px',
+                    }}
+                >
+                    <CustomTable columns={unassignedTasksColumns} data={data.unassignedTasks} />
+                </div>
+
+            </div>
+
+
+            <div>
+                <div>
                 <h3 className="pb-4 pt-4 font-bold ">
-                        {t("All Tasks")}
+                        {t("All Tasks")}    
                     </h3>
                 </div>
                 <div
@@ -405,6 +492,7 @@ const Sarcini = () => {
                     />
                 </div>
             </div>
+
             {modalSettings.isOpen && (
                 <ModalSarcini
                     isOpen={modalSettings.isOpen}

@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { HiPencil, HiTrash } from 'react-icons/hi'
 import CustomTable from '../../components/common/CustomTable'
 import ModalAddStatus from './components/modals/ModalAddStatus'
+import { t } from 'i18next'
 
 const Statusuri = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)

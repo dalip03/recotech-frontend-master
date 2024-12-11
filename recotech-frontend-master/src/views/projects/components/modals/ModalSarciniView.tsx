@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { HiPencil } from "react-icons/hi";
 
-
+// Modal Task view
 export default function ModalSarciniView({ isOpen, onClose, projectId }: any) {
     const [modalSettings, setModalSettings] = useState<any>({
         isOpen: false,

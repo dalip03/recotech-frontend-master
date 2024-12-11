@@ -34,7 +34,8 @@ export default function NewEmail() {
     const isNewEmail = !emailId; // Determine if the email is new
     const initialValues = {
         subject: email?.subject ?? '',
-        content: email?.content ?? '',
+        // content: email?.content ?? '',
+        content: email?.content && email?.content !== '<p><br></p>' ? email?.content : '',
         attachment: email?.attachmentKey ?? null, // Change this line to correctly set attachments
     };
 
@@ -80,6 +81,7 @@ export default function NewEmail() {
             to: "muresan.sebastian12@yahoo.com",
             subject: values.subject,
             content: values.content,  // HTML string here
+
         })], { type: 'application/json' });
 
         formData.append('dto', dtoBlob);
@@ -124,7 +126,7 @@ export default function NewEmail() {
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={onSubmit}
-                enableReinitialize
+                enableReinitialize={true}
             >
                 {({ values, setFieldValue, errors, touched }) => (
                     <div className="flex flex-col items-center">
@@ -148,24 +150,63 @@ export default function NewEmail() {
                                         }}
                                     </Field>
                                 </FormItem>
-                                <FormItem
+                                {/* <FormItem
                                     label="Continut"
                                     invalid={Boolean(errors.content && (touched.content || values.content == '<p><br></p>'))}
                                     errorMessage={errors.content as string}
                                 >
                                     <Field name="content">
-                                        {({ field, form }: FieldProps) => (
+                                        {({ field, form  }: FieldProps) => (
                                             <RichTextEditor
-                                                value={field.value}
+                                                value={field.value || ''}
                                                 onChange={(value) => {
+                                                    // console.log("Editor Value Updated:", value);
+                                                    console.log(field.name, value);
                                                     setFieldValue(field.name, value);
+                                                
+                                                    
                                                 }}
                                                 className={`${email?.content ? '[&_.ql-editor]:bg-gray-100 [&_.ql-editor]:rounded-b-lg' : ''}`}
                                                 readOnly={email?.content ? true : false}
                                             />
                                         )}
                                     </Field>
+                                </FormItem> */}
+
+                                <FormItem
+                                    label="Continut"
+                                    invalid={Boolean(errors.content && (touched.content || values.content === '<p><br></p>'))}
+                                    errorMessage={errors.content as string}
+                                >
+                                    <Field name="content">
+                                        {({ field, form }: FieldProps) => (
+                                           <RichTextEditor
+                                           value={field.value || ''}  // Ensure there's always a valid value passed
+                                           onChange={(value) => {
+                                            const sanitizedValue = value?.trim() || '';  // Trim the value to remove extra spaces
+
+                                            // Compare against multiple conditions to handle "empty" content
+                                            if (sanitizedValue !== '' && sanitizedValue !== '<p><br></p>' && sanitizedValue !== '<p><br>' && sanitizedValue !== '<p></p>') {
+                                                // Update Formik value only if it's not empty or just placeholder
+                                                setFieldValue(field.name, value);
+                                            } else {
+                                                // If it's empty content, set it to an empty string
+                                                setFieldValue(field.name, ''); 
+                                            }
+                                           }}
+                                           className={`${email?.content ? '[&_.ql-editor]:bg-gray-100 [&_.ql-editor]:rounded-b-lg' : ''}`}
+                                           readOnly={email?.content ? true : false} // Make it read-only if there's existing content
+                                       />
+                                       
+
+                                        )}
+                                    </Field>
                                 </FormItem>
+
+
+
+
+
                                 {/* Conditional Rendering for Attachment */}
                                 {isNewEmail ? (
                                     <FormItem label="Atasamente">
