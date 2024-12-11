@@ -321,7 +321,7 @@ export default function Proiecte() {
         },
 
         
-        ...(userRole !== 'RECEPTION' ? [
+        ...( ((userRole !== 'RECEPTION') && (userRole !== 'OPERATOR')) ? [
         {
             
             header: t('Actions'),
@@ -517,12 +517,13 @@ export default function Proiecte() {
                         padding: '16px',
                     }}
                 >
-                    {hasAccess(userRole, ['ADMIN', 'RECEPTION']) && (
+                    {hasAccess(userRole, ['ADMIN', 'RECEPTION','OPERATOR']) && 
+                    (    
                         <CustomTable
                             columns={columns}
                             data={data.projects}
                             actionButton={
-
+                                userRole !== 'OPERATOR' && (
                                 <Link to={'/proiecte/nou'}>
                                     <Button
                                         style={{
@@ -533,7 +534,7 @@ export default function Proiecte() {
                                         {t('Add Projects')}
                                     </Button>
                                 </Link>
-
+                                )
                             }
                         />
                     )}
