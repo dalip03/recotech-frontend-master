@@ -121,10 +121,12 @@ const Documente = () => {
         </div>
     }
 
+    console.log(projectTypes)
+    console.log(filteredDocuments)
     return (
         <div>
             <div>
-            <h3 className="pb-4 pt-4 font-bold ">{t("Documents")}</h3>
+                <h3 className="pb-4 pt-4 font-bold ">{t("Documents")}</h3>
             </div>
             <div className="flex flex-wrap items-center justify-between">
                 <Button onClick={() => setModalSettings((prev) => ({ ...prev, isOpen: true }))} className="mb-4 w-full lg:w-fit" shape="circle">
@@ -158,6 +160,12 @@ const Documente = () => {
 
                     const user = users.find((user: any) => user.id === document.userId)
                     const userFullName = `${user?.firstName} ${user?.lastName}`
+
+                    const projectT = projectTypes.find((project: any) => project.id === Number(document.projectType))
+                    const ProjectType = `${projectT?.name}`
+                    // console.log(document.projectType)
+                    // console.log(projectN.name)
+
                     return (
                         <Card
                             key={document.id}
@@ -181,6 +189,25 @@ const Documente = () => {
                                     </Link>
                                 ) || <p className="text-right">{'-'}</p>}
                             </div>
+
+                            {/* project type */}
+
+
+                            <div className="flex justify-between mt-2">
+                                <p>{t("Project Type")}: </p>
+                                {ProjectType ? (
+                                    <p className="text-right">{ProjectType}</p>
+                                ) : (
+                                    <p className="text-right">{'-'}</p>
+                                )}
+                            </div>
+
+
+
+                            {/* {console.log(document.status)} */}
+
+
+
                             <div className="flex justify-between mt-2">
                                 <p>{t("Client")}: </p>
                                 {document.clientId && (
@@ -191,31 +218,44 @@ const Documente = () => {
                             </div>
                             <div className="flex justify-between mt-2">
                                 <p>{t("Created By")}: </p>
-                                <p className="text-right">{userFullName ?? '-'}</p>
+                                <p className="text-right">{userFullName ?? '--'}</p>
                             </div>
                             <div className="flex justify-between mt-2">
                                 <p>{t("Created On")}: </p>
                                 <p className="text-right">{new Date(document.createDate).toLocaleDateString('ro-RO')}</p>
                             </div>
+
+                            <div className="flex justify-between mt-2">
+                                <p>{t(" Status")}: </p>
+                                {document.status ? (
+                                    <p className="text-right">{document.status}</p>
+                                ) : (
+                                    <p className="text-right">{'-'}</p>
+                                )}
+                            </div>
                         </Card>
                     )
                 })}
             </div>
-            {modalSettings.isOpen && (
-                <ModalAddDocuments
-                    isOpen={modalSettings.isOpen}
-                    onClose={handleModalClose}
-                />
-            )}
-            {modalSettings.isOpenDelete && (
-                <ModalDelete
-                    message={t("deleteMessage.Are you sure you want to delete this document?")}
-                    isOpen={modalSettings.isOpenDelete}
-                    onClose={() => setModalSettings((prev) => ({ ...prev, isOpenDelete: false }))}
-                    onConfirmDelete={handleDeleteConfirmation}
-                />
-            )}
-        </div>
+            {
+                modalSettings.isOpen && (
+                    <ModalAddDocuments
+                        isOpen={modalSettings.isOpen}
+                        onClose={handleModalClose}
+                    />
+                )
+            }
+            {
+                modalSettings.isOpenDelete && (
+                    <ModalDelete
+                        message={t("deleteMessage.Are you sure you want to delete this document?")}
+                        isOpen={modalSettings.isOpenDelete}
+                        onClose={() => setModalSettings((prev) => ({ ...prev, isOpenDelete: false }))}
+                        onConfirmDelete={handleDeleteConfirmation}
+                    />
+                )
+            }
+        </div >
     )
 }
 

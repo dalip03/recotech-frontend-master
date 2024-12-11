@@ -68,6 +68,7 @@ const Constatari = () => {
             const usersResult = await fetchUsers();
             const usersData = usersResult.data.content;
             setUsers(usersData);
+            console.log(data)
         } catch (error) {
             console.error('Error fetching data:', error)
         }

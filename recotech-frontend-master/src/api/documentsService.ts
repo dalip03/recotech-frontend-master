@@ -15,6 +15,7 @@ export const fetchDocuments = async (query?: string) => {
         const response = await axios.get(`${API_URL}/documents?${query ? query + '&' : ''}size=10000`, {
             headers: AUTH_HEADER,
         })
+        console.log(response.data)
         return response.data
     } catch (error) {
         console.error('Error fetching documents:', error)
