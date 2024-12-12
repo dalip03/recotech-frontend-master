@@ -113,7 +113,7 @@ export default function ProiectDetails() {
             <div className="mt-4">
                 <Tabs defaultValue="tab1" variant="pill">
                     <TabList>
-                        <TabNav value="tab1">{t("Project Information")}</TabNav>
+                        <TabNav  value="tab1">{t("Project Information")}</TabNav>
                         {id && id !== 'nou' && (
                             <>
                                 {hasAccess(userRole, ['ADMIN', 'VANZATOR', 'RECEPTION']) && (

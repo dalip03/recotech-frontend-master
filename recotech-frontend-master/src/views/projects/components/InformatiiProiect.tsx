@@ -17,6 +17,7 @@ import { useAppSelector } from '@/store'
 import { useTranslation } from 'react-i18next'
 import { sendNotification } from '@/api/notificationService'
 import { NotificationType } from '@/components/template/Notification'
+import { hasAccess } from '@/utils/sharedHelpers'
 
 interface Proiect {
     createDate: string
@@ -261,7 +262,7 @@ const InformatiiProiect = ({ projectId }: any) => {
                     <label className="mb-2" htmlFor="project-title">
                         {t("Project Title")}
                     </label>
-                    <Input
+                    <Input  disabled={!hasAccess}
                         id="project-title"
                         placeholder={t("Title")}
                         value={project.name}
@@ -277,7 +278,7 @@ const InformatiiProiect = ({ projectId }: any) => {
                     <label className="mb-2" htmlFor="project-type">
                         {t("Project Type")}
                     </label>
-                    <Select
+                    <Select isDisabled={!hasAccess}
                         placeholder={t("Project Type")}
                         className='rounded-full'
                         value={projectTypeOptions.find((projectType: any) => projectType.value === project.type)}
@@ -292,7 +293,7 @@ const InformatiiProiect = ({ projectId }: any) => {
                     <label className="mb-2" htmlFor="project-type">
                         {t("Project Status")}
                     </label>
-                    <Select
+                    <Select isDisabled={!hasAccess}
                         placeholder={t("Project Status")}
                         className='rounded-full'
                         value={statuses.find((status) => status.value === project.status)}
@@ -307,7 +308,7 @@ const InformatiiProiect = ({ projectId }: any) => {
                     <label className="mb-2" htmlFor="delivery-date">
                         {t("Delivery Date")}
                     </label>
-                    <DatePicker
+                    <DatePicker disabled={!hasAccess}
                         value={project?.deliveryDate ? new Date(project?.deliveryDate) : null}
                         onChange={(date) => setProject((prev: any) => ({ ...prev, deliveryDate: date }))}
                     />
@@ -317,7 +318,7 @@ const InformatiiProiect = ({ projectId }: any) => {
                 <label className="mb-2" htmlFor="project-info">
                     {`${t("Brand")}; An; ccm, comb, kw, ${t("Engine Type")}`}
                 </label>
-                <Input
+                <Input disabled={!hasAccess}
                     id='project-info'
                     placeholder="Informații Proiect"
                     textArea

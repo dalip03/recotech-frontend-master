@@ -351,6 +351,7 @@ export default function ModalSarcini({
                                                 errorMessage={String(
                                                     errors.assignedTo,
                                                 )}
+                                                
                                             >
                                                 {/* without unassigned  */}
                                                 {/* <Field name="assignedTo">
@@ -424,6 +425,7 @@ export default function ModalSarcini({
 
                                                         return (
                                                             <Select
+                                                            isDisabled={!canView}
                                                                 {...field}
                                                                 options={
                                                                     options
