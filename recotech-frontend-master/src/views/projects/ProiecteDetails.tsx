@@ -125,7 +125,7 @@ export default function ProiectDetails() {
                                 {hasAccess(userRole, ['ADMIN', 'RECEPTION', 'VANZATOR']) && (
                                     <TabNav value="tab4">{t("Documents")}</TabNav>
                                 )}
-                                {hasAccess(userRole, ['ADMIN', 'OPERATOR', 'RECEPTION', 'PIESAR', 'VANZATOR']) && (
+                                {hasAccess(userRole, ['ADMIN', 'OPERATOR', 'RECEPTION', 'VANZATOR']) && (
                                     <>
                                         <TabNav value="tab5">{t("Tasks")}</TabNav>
                                     </>

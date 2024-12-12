@@ -331,11 +331,12 @@ const InformatiiProiect = ({ projectId }: any) => {
                     }
                 />
             </div>
-            <div className='text-right'>
+            
+            {hasAccess && (<div className='text-right'>
                 <Button className='w-full lg:w-fit' onClick={handleSave}>
                     {t("Save")}
                 </Button>
-            </div>
+            </div>)}
             {hasAccess && (
                 <div className='space-y-5'>
                     <h4>{t("Project Operators")}</h4>
