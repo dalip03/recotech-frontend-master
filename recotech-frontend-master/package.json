@@ -12,7 +12,6 @@
     "prettier:fix": "npm run prettier -- --write",
     "format": "npm run prettier:fix && npm run lint:fix"
   },
-  
   "dependencies": {
     "@floating-ui/react": "^0.26.4",
     "@fullcalendar/daygrid": "^6.1.8",
@@ -30,6 +29,8 @@
     "d3-dsv": "^3.0.1",
     "d3-fetch": "^3.0.1",
     "d3-scale": "^4.0.2",
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0",
     "dayjs": "^1.11.7",
     "formik": "^2.2.9",
     "framer-motion": "^10.8.5",

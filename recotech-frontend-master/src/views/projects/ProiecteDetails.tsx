@@ -141,7 +141,14 @@ export default function ProiectDetails() {
                     </TabList>
                     <div className="p-4">
                         <TabContent value="tab1">
-                            <InformatiiProiect projectId={id} />
+                           
+
+                            {id && id !== 'nou' ?(
+                            <InformatiiProiect projectId={id} edit={false}  />
+                            ):
+                            (  <InformatiiProiect projectId={id}  />)}
+
+                            {/* when passing the id then it means it is - - edit mode --  */}
                         </TabContent>
                         {id && id !== 'nou' && (
                             <>
@@ -161,7 +168,7 @@ export default function ProiectDetails() {
                                     <InformatiiConstatari projectId={id} />
                                 </TabContent>
                                 <TabContent value="tab7">
-                                    <InformatiiPiese projectId={id} />
+                                    <InformatiiPiese projectId={id}  />
                                 </TabContent>
                             </>
                         )}

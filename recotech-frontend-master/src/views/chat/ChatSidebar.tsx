@@ -38,6 +38,7 @@ const Sidebar = ({ onUserSelect, friendsList }: any) => {
 
             <ul className="h-[90%] overflow-y-auto pt-4">
                 {filteredUsers.map((contact: any) => {
+                    console.log("contact -- >" , contact.lastMessage)
                     return (
                         <li
                             key={contact.connectionId}

@@ -1,9 +1,13 @@
 import { useAppSelector } from "@/store";
 import { RiCheckDoubleFill } from "react-icons/ri"; // Import double checkmark icon
+import { format } from 'date-fns';
+import { toZonedTime } from 'date-fns-tz';  // Correct import
+
 
 const ChatMessages = ({ messages }: any) => {
+    // console.log(messages)
     const user = useAppSelector((state) => state.auth.user);
-
+    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     // Function to return the appropriate delivery status
     const getStatusTextOrIcon = (status: string) => {
         switch (status) {
@@ -26,6 +30,9 @@ const ChatMessages = ({ messages }: any) => {
         <div className="flex-1 p-6 h-full overflow-y-auto">
             {messages.map((message: any, index: number) => {
                 const isSentByMe = message.senderId === user.id;
+                 // Convert the message time to the user's local time zone
+                 const messageTimeInLocal = toZonedTime(message.time, userTimeZone); // Use user's time zone
+                 const formattedTime = format(messageTimeInLocal, 'yyyy-MM-dd HH:mm:ss'); // Format it for display
 
                 return (
                     <div
@@ -39,12 +46,19 @@ const ChatMessages = ({ messages }: any) => {
                             <p className="break-words leading-relaxed">{message.content}</p>
                             {isSentByMe && (
                                 <div className="text-right text-xs text-gray-400 flex items-center -mt-2 justify-end">
-                                    <span>{message.time ?? "00:53"}</span>
+                                    <span>
+                                    {new Date(message.time).toLocaleString()} 
+                                        {/* {message.time ?? "00:52"} */}
+                                        </span>
                                     <span className="ml-2">{getStatusTextOrIcon(message.messageDeliveryStatusEnum)}</span>
                                 </div>
                             ) || (
                                     <div className="text-right text-xs text-gray-400 flex items-center -mt-2 justify-end">
-                                        <span>{message.time ?? '00:53'}</span>
+                                        <span>
+                                        {formattedTime}
+                                            {/* {message.time ?? '00:53'} */}
+                                            </span>
+                                        
                                     </div>
                                 )}
                         </div>

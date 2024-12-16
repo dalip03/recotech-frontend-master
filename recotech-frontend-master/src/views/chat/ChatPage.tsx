@@ -12,6 +12,8 @@ import toastNotification from '@/components/common/ToastNotification';
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
 import { fetchFileById } from '@/api/documentsService';
 import { sendNotification } from '@/api/notificationService';
+import { format } from 'date-fns';
+
 
 // Define the message type
 interface Message {
@@ -98,7 +100,9 @@ const ChatPage: React.FC = () => {
 
                 if (selectedContact) {
                     client.subscribe(`/topic/chat/${selectedContact.convId}`, (message) => {
+
                         const receivedMessage: Message = JSON.parse(message.body);
+                        console.log('Received message:', message);
                         console.log('Received message:', receivedMessage);
 
                         // Update the messages state
@@ -122,11 +126,24 @@ const ChatPage: React.FC = () => {
         };
     }, [selectedContact]); // Run when selectedContact changes
 
+
+
     // Function to send messages via STOMP
+
     const sendMessage = async (message: any) => {
+        // Convert current local time to UTC
+       const localDate = new Date(); // Get current local date
+       const timeInUTC = new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000); // Convert to UTC
+        const formattedTime = timeInUTC.toISOString(); // Format to ISO string for sending
+
+
+
+        console.log("message in chat page" , message)
         if (stompClient && stompClient.active && selectedContact) {
             const chatMessage = {
                 content: message.text,
+                // time: new Date().toISOString(),  // Include the time when sending the message
+                time: formattedTime,
                 messageType: "CHAT",
                 senderId: user.id,
                 senderUsername: user.username,
@@ -143,6 +160,7 @@ const ChatPage: React.FC = () => {
                 }
             });
 
+            console.log(chatMessage)
             console.log(selectedContact)
             // Prepare notification DTO
             const notificationDto = {
@@ -212,6 +230,7 @@ const ChatPage: React.FC = () => {
                 />
             </div>
             <div className="flex flex-col bg-white shadow-lg h-[80vh] w-full">
+                {/* {console.log("messages before "  ,messages)} */}
                 {selectedContact && (
                     <>
                         <ChatHeader selectedContact={selectedContact} />

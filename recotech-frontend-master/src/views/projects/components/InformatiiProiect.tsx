@@ -17,7 +17,6 @@ import { useAppSelector } from '@/store'
 import { useTranslation } from 'react-i18next'
 import { sendNotification } from '@/api/notificationService'
 import { NotificationType } from '@/components/template/Notification'
-import { hasAccess } from '@/utils/sharedHelpers'
 
 interface Proiect {
     createDate: string
@@ -58,7 +57,11 @@ interface User {
     blackPoints: number
 }
 
-const InformatiiProiect = ({ projectId }: any) => {
+const InformatiiProiect = ({ projectId,edit }: any) => {
+    // let editt = true;
+    //  editt = edit? edit : true;
+    // console.log("editt -- ",editt )
+    // console.log("edit -- ",edit )
     const { id } = useParams<{ id: string }>()
     const [users, setUsers] = useState<User[]>([])
     const user = useAppSelector((state) => state.auth.user);
@@ -262,7 +265,8 @@ const InformatiiProiect = ({ projectId }: any) => {
                     <label className="mb-2" htmlFor="project-title">
                         {t("Project Title")}
                     </label>
-                    <Input  disabled={!hasAccess}
+                    <Input  
+                    disabled={!hasAccess && edit === false}
                         id="project-title"
                         placeholder={t("Title")}
                         value={project.name}
@@ -278,7 +282,7 @@ const InformatiiProiect = ({ projectId }: any) => {
                     <label className="mb-2" htmlFor="project-type">
                         {t("Project Type")}
                     </label>
-                    <Select isDisabled={!hasAccess}
+                    <Select isDisabled={!hasAccess && edit === false}
                         placeholder={t("Project Type")}
                         className='rounded-full'
                         value={projectTypeOptions.find((projectType: any) => projectType.value === project.type)}
@@ -293,7 +297,7 @@ const InformatiiProiect = ({ projectId }: any) => {
                     <label className="mb-2" htmlFor="project-type">
                         {t("Project Status")}
                     </label>
-                    <Select isDisabled={!hasAccess}
+                    <Select isDisabled={!hasAccess && edit === false}
                         placeholder={t("Project Status")}
                         className='rounded-full'
                         value={statuses.find((status) => status.value === project.status)}
@@ -308,7 +312,8 @@ const InformatiiProiect = ({ projectId }: any) => {
                     <label className="mb-2" htmlFor="delivery-date">
                         {t("Delivery Date")}
                     </label>
-                    <DatePicker disabled={!hasAccess}
+                    <DatePicker 
+                    disabled={!hasAccess && edit === false}
                         value={project?.deliveryDate ? new Date(project?.deliveryDate) : null}
                         onChange={(date) => setProject((prev: any) => ({ ...prev, deliveryDate: date }))}
                     />
@@ -318,7 +323,7 @@ const InformatiiProiect = ({ projectId }: any) => {
                 <label className="mb-2" htmlFor="project-info">
                     {`${t("Brand")}; An; ccm, comb, kw, ${t("Engine Type")}`}
                 </label>
-                <Input disabled={!hasAccess}
+                <Input disabled={!hasAccess && edit === false}
                     id='project-info'
                     placeholder="Informații Proiect"
                     textArea
