@@ -7,6 +7,8 @@ import { addProjectClient, getProjectClientById, updateProjectClient } from '@/a
 import { useParams } from 'react-router-dom';
 import { getProjectById, updateProject } from '@/api/projectService';
 import { useTranslation } from 'react-i18next';
+import { hasAccess, UserRole } from '@/utils/sharedHelpers'
+import { useAppSelector } from '@/store'
 
 interface ProjectClient {
     id?: number | null;
@@ -53,6 +55,8 @@ const InformatiiClienti = () => {
     const { id } = useParams();
 
     const { t } = useTranslation();
+    const userRole = useAppSelector((state) => state.auth.user.authority);
+    const hasAccess = ['SUPER_ADMIN', 'ADMIN'].includes(userRole);
 
     useEffect(() => {
         const fetchClientData = async () => {
@@ -181,6 +185,7 @@ const InformatiiClienti = () => {
             <div className="flex flex-row items-center space-x-2">
                 <label className="whitespace-nowrap" htmlFor="client-type">{`${t("Select")} ${t("Client")}:`}</label>
                 <Select
+                isDisabled={!hasAccess}
                     placeholder={t("Client")}
                     className='rounded-full flex-1 flex-wrap min-w-[10rem] lg:max-w-[30%]'
                     style={{ flex: '0 1 100%' }}
@@ -193,6 +198,7 @@ const InformatiiClienti = () => {
                 <label className="block" htmlFor="client-type">{t("Type")}:</label>
                 <div className="flex items-center space-x-4">
                     <Radio
+                    disabled={!hasAccess}
                         id="client-individual"
                         className="mr-4"
                         name="clientType"
@@ -202,6 +208,7 @@ const InformatiiClienti = () => {
                         {t("client-individual")}
                     </Radio>
                     <Radio
+                    disabled={!hasAccess}
                         id="client-company"
                         name="clientType"
                         checked={client.type === 'COMPANY'}
@@ -217,6 +224,7 @@ const InformatiiClienti = () => {
                         {`${t("Name")} / ${t("Company Name")}`}
                     </label>
                     <Input
+                    disabled={!hasAccess}
                         id="client-name"
                         placeholder={`${t("Name")} / ${t("Company Name")}`}
                         value={client.name}
@@ -228,6 +236,7 @@ const InformatiiClienti = () => {
                         {t("VAT")}
                     </label>
                     <Input
+                     disabled={!hasAccess}
                         id="client-vat"
                         placeholder={t("VAT")}
                         value={client.vat}
@@ -241,6 +250,7 @@ const InformatiiClienti = () => {
                         Email
                     </label>
                     <Input
+                     disabled={!hasAccess}
                         id="client-email"
                         placeholder="Email"
                         value={client.email}
@@ -252,6 +262,7 @@ const InformatiiClienti = () => {
                         {t("Phone")}
                     </label>
                     <Input
+                     disabled={!hasAccess}
                         id="client-phone"
                         placeholder={t("Phone")}
                         value={client.phone}
@@ -264,6 +275,7 @@ const InformatiiClienti = () => {
                     {t("Billing Address")}
                 </label>
                 <Input
+                 disabled={!hasAccess}
                     id='billing-address'
                     placeholder={t("Billing Address")}
                     textArea
@@ -277,6 +289,7 @@ const InformatiiClienti = () => {
                         {t("City")}
                     </label>
                     <Input
+                     disabled={!hasAccess}
                         id="billing-city"
                         placeholder={t("City")}
                         value={client.billingCity}
@@ -288,6 +301,7 @@ const InformatiiClienti = () => {
                         {t("County")}
                     </label>
                     <Input
+                     disabled={!hasAccess}
                         id="billing-county"
                         placeholder={t("County")}
                         value={client.billingCounty}
@@ -299,6 +313,7 @@ const InformatiiClienti = () => {
                         {t("Zip Code")}
                     </label>
                     <Input
+                     disabled={!hasAccess}
                         id="billing-postal-code"
                         placeholder={t("Zip Code")}
                         value={client.billingPostalCode}
@@ -308,6 +323,7 @@ const InformatiiClienti = () => {
             </div>
             <div>
                 <Checkbox
+                 disabled={!hasAccess}
                     className="mb-4"
                     checked={sameAddress || isSameShippingAddress(client)}
                     onChange={(e) => onCheck(e)}
@@ -320,6 +336,7 @@ const InformatiiClienti = () => {
                     {t("Shipping Address")}
                 </label>
                 <Input
+                 disabled={!hasAccess}
                     id="shipping-address"
                     placeholder={t("Shipping Address")}
                     textArea
@@ -333,6 +350,7 @@ const InformatiiClienti = () => {
                         {t("City")}
                     </label>
                     <Input
+                     disabled={!hasAccess}
                         id="shipping-city"
                         placeholder={t("City")}
                         value={client.shippingCity}
@@ -344,6 +362,7 @@ const InformatiiClienti = () => {
                         {t("County")}
                     </label>
                     <Input
+                     disabled={!hasAccess}
                         id="shipping-county"
                         placeholder={t("County")}
                         value={client.shippingCounty}
@@ -355,6 +374,7 @@ const InformatiiClienti = () => {
                         {t("Zip Code")}
                     </label>
                     <Input
+                     disabled={!hasAccess}
                         id="shipping-postal-code"
                         placeholder={t("Zip Code")}
                         value={client.shippingPostalCode}
