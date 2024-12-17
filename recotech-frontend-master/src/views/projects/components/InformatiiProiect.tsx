@@ -337,12 +337,12 @@ const InformatiiProiect = ({ projectId,edit }: any) => {
                 />
             </div>
             
-            {hasAccess && (<div className='text-right'>
+            {(hasAccess || userRole === 'RECEPTION') && (<div className='text-right'>
                 <Button className='w-full lg:w-fit' onClick={handleSave}>
                     {t("Save")}
                 </Button>
             </div>)}
-            {hasAccess && (
+            {(hasAccess || userRole === 'RECEPTION')  && (
                 <div className='space-y-5'>
                     <h4>{t("Project Operators")}</h4>
                     <div className='flex flex-row gap-5'>
