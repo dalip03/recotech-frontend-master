@@ -112,6 +112,8 @@ const ModalAddUser: React.FC<ModalAddUserProps> = ({ isOpen, onClose, userData }
                     onSubmit={onSubmit}
                 >
                     {({ setFieldValue, errors, touched }) => (
+                                                <div className="max-h-[70vh] w-full overflow-y-auto space-y-5 p-5">
+
                         <Form>
                             <FormContainer layout="horizontal" className="text-left">
                                 <FormItem
@@ -247,6 +249,7 @@ const ModalAddUser: React.FC<ModalAddUserProps> = ({ isOpen, onClose, userData }
                                 </Button>
                             </div>
                         </Form>
+                        </div>
                     )}
                 </Formik>
             </div>

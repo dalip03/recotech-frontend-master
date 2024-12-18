@@ -11,7 +11,7 @@ export default function Reports() {
     return (
         <div className="space-y-4">
             <div>
-            <h3 className="pb-4 pt-4 font-bold ">Dashboard</h3>
+            <h3 className="pb-4 pt-4 font-bold ">Reports</h3>
             </div>
             <Suspense fallback={
                 <div className="flex justify-center items-center h-full w-full">

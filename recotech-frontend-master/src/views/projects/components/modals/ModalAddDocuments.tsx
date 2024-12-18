@@ -220,6 +220,8 @@ export default function ModalAddDocuments({ onClose, isOpen, projectId = null }:
                     onSubmit={handleSubmit}
                 >
                     {({ setFieldValue, errors, touched, values }) => (
+                                                <div className="max-h-[70vh] w-full overflow-y-auto space-y-5 p-5">
+
                         <Form>
                             <FormContainer layout='horizontal' className='text-left'>
                                 {isSignaturePadVisible ? (
@@ -443,6 +445,7 @@ export default function ModalAddDocuments({ onClose, isOpen, projectId = null }:
                                 )}
                             </FormContainer>
                         </Form>
+                        </div>
                     )}
                 </Formik>
             </Dialog>

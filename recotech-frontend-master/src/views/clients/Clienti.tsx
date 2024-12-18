@@ -147,10 +147,7 @@ const Clienti = () => {
     };
     
 
-    // const handleDelete = (id: string) => {
-    //     setData((prevData) => prevData.filter((item) => item.id !== id))
-    // }
-
+  
     const handleCancelDelete = () => {
         setModalSettings((prevModalSettings: any) => ({
             ...prevModalSettings,
