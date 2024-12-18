@@ -232,7 +232,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
                         </Tr>
                     ))}
                 </THead>
-                <TBody>
+                <TBody className='h-screen'>
                     {table.getRowModel().rows.map((row) => (
                         <Tr key={row.id}>
                             {row.getVisibleCells().map((cell) => (
