@@ -12,6 +12,8 @@ import toastNotification from '@/components/common/ToastNotification';
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
 import { fetchFileById } from '@/api/documentsService';
 import { sendNotification } from '@/api/notificationService';
+import { format } from 'date-fns';
+
 
 // Define the message type
 interface Message {
@@ -75,6 +77,9 @@ const ChatPage: React.FC = () => {
     }, []);
 
 
+
+
+
     // Effect for WebSocket connection and subscription
     useEffect(() => {
         const client = new Client({
@@ -83,22 +88,43 @@ const ChatPage: React.FC = () => {
                 Authorization: `Bearer ${token}`,
             },
             onConnect: (frame) => {
+                
                 client.subscribe(`/topic/chat/${user.id}`, (message) => {
                     const receivedMessage: any = JSON.parse(message.body);
-                    console.log(receivedMessage);
-                    setFriendsList((prevFriendsList) =>
-                        prevFriendsList.map((friend) =>
-                            friend.connectionId === receivedMessage.senderId
-                                ? { ...friend, unSeen: friend.unSeen + 1, lastMessage: receivedMessage.content } // Reset unread count for selected friend
-                                : friend
-                        )
-                    );
-                    // Update unread counts using unreadCounts state
-                }, { 'Authorization': `Bearer ${token}` });
+                    setFriendsList((prevFriendsList) => {
+                        const updatedFriendsList = prevFriendsList
+                            .map((friend) =>
+                                friend.connectionId === receivedMessage.senderId
+                                    ? {
+                                          ...friend,
+                                          unSeen: friend.unSeen + 1,
+                                          lastMessage: receivedMessage.content,
+                                          lastMessageTime: (() => {
+                                            const date = new Date(receivedMessage.time);
+                                            const hours = date.getHours().toString().padStart(2, '0'); // Ensure 2 digits
+                                            const minutes = date.getMinutes().toString().padStart(2, '0'); // Ensure 2 digits
+                                            return `${hours}:${minutes}`;
+                                        })(),
+                                        lastMessageTimeRaw: new Date(receivedMessage.time).getTime(), // Keep raw timestamp for sorting
+                                      }
+                                    : friend
+                            )
+                            .sort((a, b) => {
+                                const timeA = a.lastMessageTimeRaw ? new Date(a.lastMessageTimeRaw).getTime() : 0;
+                                const timeB = b.lastMessageTimeRaw ? new Date(b.lastMessageTimeRaw).getTime() : 0;
+                                return timeB - timeA; // Sort descending
+                            });
+                        return updatedFriendsList;
+                    });
+                });
+
+
 
                 if (selectedContact) {
                     client.subscribe(`/topic/chat/${selectedContact.convId}`, (message) => {
+
                         const receivedMessage: Message = JSON.parse(message.body);
+                        console.log('Received message:', message);
                         console.log('Received message:', receivedMessage);
 
                         // Update the messages state
@@ -122,11 +148,24 @@ const ChatPage: React.FC = () => {
         };
     }, [selectedContact]); // Run when selectedContact changes
 
+
+
     // Function to send messages via STOMP
+
     const sendMessage = async (message: any) => {
+        // Convert current local time to UTC
+        const localDate = new Date(); // Get current local date
+        const timeInUTC = new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000); // Convert to UTC
+        const formattedTime = timeInUTC.toISOString(); // Format to ISO string for sending
+
+
+
+        console.log("message in chat page", message)
         if (stompClient && stompClient.active && selectedContact) {
             const chatMessage = {
                 content: message.text,
+                // time: new Date().toISOString(),  // Include the time when sending the message
+                time: formattedTime,
                 messageType: "CHAT",
                 senderId: user.id,
                 senderUsername: user.username,
@@ -143,6 +182,7 @@ const ChatPage: React.FC = () => {
                 }
             });
 
+            console.log(chatMessage)
             console.log(selectedContact)
             // Prepare notification DTO
             const notificationDto = {
@@ -173,7 +213,7 @@ const ChatPage: React.FC = () => {
         setFriendsList((prevFriendsList) =>
             prevFriendsList.map((friend) =>
                 friend.connectionId === contact.connectionId
-                    ? { ...friend, unSeen: 0, lastMessage: null }
+                    ? { ...friend, unSeen: 0, }
                     : friend
             )
         );
@@ -212,6 +252,7 @@ const ChatPage: React.FC = () => {
                 />
             </div>
             <div className="flex flex-col bg-white shadow-lg h-[80vh] w-full">
+                {/* {console.log("messages before "  ,messages)} */}
                 {selectedContact && (
                     <>
                         <ChatHeader selectedContact={selectedContact} />

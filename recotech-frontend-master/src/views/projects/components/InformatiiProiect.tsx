@@ -57,7 +57,11 @@ interface User {
     blackPoints: number
 }
 
-const InformatiiProiect = ({ projectId }: any) => {
+const InformatiiProiect = ({ projectId,edit }: any) => {
+    // let editt = true;
+    //  editt = edit? edit : true;
+    // console.log("editt -- ",editt )
+    // console.log("edit -- ",edit )
     const { id } = useParams<{ id: string }>()
     const [users, setUsers] = useState<User[]>([])
     const user = useAppSelector((state) => state.auth.user);
@@ -261,7 +265,8 @@ const InformatiiProiect = ({ projectId }: any) => {
                     <label className="mb-2" htmlFor="project-title">
                         {t("Project Title")}
                     </label>
-                    <Input
+                    <Input  
+                    disabled={!hasAccess && edit === false}
                         id="project-title"
                         placeholder={t("Title")}
                         value={project.name}
@@ -277,7 +282,7 @@ const InformatiiProiect = ({ projectId }: any) => {
                     <label className="mb-2" htmlFor="project-type">
                         {t("Project Type")}
                     </label>
-                    <Select
+                    <Select isDisabled={!hasAccess && edit === false}
                         placeholder={t("Project Type")}
                         className='rounded-full'
                         value={projectTypeOptions.find((projectType: any) => projectType.value === project.type)}
@@ -292,7 +297,7 @@ const InformatiiProiect = ({ projectId }: any) => {
                     <label className="mb-2" htmlFor="project-type">
                         {t("Project Status")}
                     </label>
-                    <Select
+                    <Select isDisabled={!hasAccess && edit === false}
                         placeholder={t("Project Status")}
                         className='rounded-full'
                         value={statuses.find((status) => status.value === project.status)}
@@ -307,7 +312,8 @@ const InformatiiProiect = ({ projectId }: any) => {
                     <label className="mb-2" htmlFor="delivery-date">
                         {t("Delivery Date")}
                     </label>
-                    <DatePicker
+                    <DatePicker 
+                    disabled={!hasAccess && edit === false}
                         value={project?.deliveryDate ? new Date(project?.deliveryDate) : null}
                         onChange={(date) => setProject((prev: any) => ({ ...prev, deliveryDate: date }))}
                     />
@@ -317,7 +323,7 @@ const InformatiiProiect = ({ projectId }: any) => {
                 <label className="mb-2" htmlFor="project-info">
                     {`${t("Brand")}; An; ccm, comb, kw, ${t("Engine Type")}`}
                 </label>
-                <Input
+                <Input disabled={!hasAccess && edit === false}
                     id='project-info'
                     placeholder="Informații Proiect"
                     textArea
@@ -330,12 +336,13 @@ const InformatiiProiect = ({ projectId }: any) => {
                     }
                 />
             </div>
-            <div className='text-right'>
+            
+            {(hasAccess || userRole === 'RECEPTION') && (<div className='text-right'>
                 <Button className='w-full lg:w-fit' onClick={handleSave}>
                     {t("Save")}
                 </Button>
-            </div>
-            {hasAccess && (
+            </div>)}
+            {(hasAccess || userRole === 'RECEPTION')  && (
                 <div className='space-y-5'>
                     <h4>{t("Project Operators")}</h4>
                     <div className='flex flex-row gap-5'>

@@ -113,7 +113,7 @@ export default function ProiectDetails() {
             <div className="mt-4">
                 <Tabs defaultValue="tab1" variant="pill">
                     <TabList>
-                        <TabNav value="tab1">{t("Project Information")}</TabNav>
+                        <TabNav  value="tab1">{t("Project Information")}</TabNav>
                         {id && id !== 'nou' && (
                             <>
                                 {hasAccess(userRole, ['ADMIN', 'VANZATOR', 'RECEPTION']) && (
@@ -125,7 +125,7 @@ export default function ProiectDetails() {
                                 {hasAccess(userRole, ['ADMIN', 'RECEPTION', 'VANZATOR']) && (
                                     <TabNav value="tab4">{t("Documents")}</TabNav>
                                 )}
-                                {hasAccess(userRole, ['ADMIN', 'OPERATOR', 'RECEPTION', 'PIESAR', 'VANZATOR']) && (
+                                {hasAccess(userRole, ['ADMIN', 'OPERATOR', 'RECEPTION', 'VANZATOR']) && (
                                     <>
                                         <TabNav value="tab5">{t("Tasks")}</TabNav>
                                     </>
@@ -141,7 +141,14 @@ export default function ProiectDetails() {
                     </TabList>
                     <div className="p-4">
                         <TabContent value="tab1">
-                            <InformatiiProiect projectId={id} />
+                           
+
+                            {id && id !== 'nou' ?(
+                            <InformatiiProiect projectId={id} edit={false}  />
+                            ):
+                            (  <InformatiiProiect projectId={id}  />)}
+
+                            {/* when passing the id then it means it is - - edit mode --  */}
                         </TabContent>
                         {id && id !== 'nou' && (
                             <>
@@ -161,7 +168,7 @@ export default function ProiectDetails() {
                                     <InformatiiConstatari projectId={id} />
                                 </TabContent>
                                 <TabContent value="tab7">
-                                    <InformatiiPiese projectId={id} />
+                                    <InformatiiPiese projectId={id}  />
                                 </TabContent>
                             </>
                         )}

@@ -6,6 +6,8 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { fetchStatements } from '@/api/constatariService';
 import { useTranslation } from 'react-i18next';
+import { useAppSelector } from '@/store';
+
 
 interface Proiect {
     createDate: string;
@@ -48,6 +50,9 @@ const InformatiiFinanciare = () => {
 
     const [project, setProject] = useState<Proiect | null>(null);
     const { t } = useTranslation();
+
+    const userRole = useAppSelector((state) => state.auth.user.authority);
+    const hasAccess = ['SUPER_ADMIN', 'ADMIN'].includes(userRole);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -132,6 +137,7 @@ const InformatiiFinanciare = () => {
                                         {t("Material Cost")}
                                     </label>
                                     <Field
+                                     disabled={!hasAccess}
                                         name="materialCost"
                                         as={Input}
                                         id="materials-cost"
@@ -147,6 +153,7 @@ const InformatiiFinanciare = () => {
                                         {t("Payment Methods")}
                                     </label>
                                     <Select
+                                     isDisabled={!hasAccess}
                                         id="payment-type"
                                         value={paymentOptions.find((option) => option.value === values.paymentType)}
                                         options={paymentOptions}
@@ -165,6 +172,7 @@ const InformatiiFinanciare = () => {
                                         {t("Labour Cost")}
                                     </label>
                                     <Field
+                                       
                                         name="laborCost"
                                         as={Input}
                                         id="labor-cost"
@@ -178,6 +186,7 @@ const InformatiiFinanciare = () => {
                                 <div className="flex flex-col">
                                     <label className="mb-2">{t("Payment Date")}</label>
                                     <DatePicker
+                                       disabled={!hasAccess}
                                         placeholder={t("Payment Date")}
                                         inputFormat="DD-MM-YYYY"
                                         value={values.paymentDate ? new Date(values.paymentDate) : undefined}
@@ -193,6 +202,7 @@ const InformatiiFinanciare = () => {
                                         {t("Discount")} (%)
                                     </label>
                                     <Field
+                                     disabled={!hasAccess}
                                         name="discount"
                                         as={Input}
                                         id="discount"
@@ -207,6 +217,7 @@ const InformatiiFinanciare = () => {
                                         {t("VAT")}
                                     </label>
                                     <Input
+                                     disabled={!hasAccess}
                                         id="VAT"
                                         placeholder={t("VAT")}
                                         suffix="%"
@@ -247,11 +258,13 @@ const InformatiiFinanciare = () => {
                                 </div>
                             </div>
 
+                            { hasAccess &&
                             <div className="text-right">
                                 <Button className="w-full lg:w-fit" type="submit">
                                     {t("Save")}
                                 </Button>
                             </div>
+                            }
                         </Form>
                     )}
                 </Formik>

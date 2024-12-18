@@ -478,7 +478,7 @@ export default function Proiecte() {
                     </div>
                 </Card>
             </div>
-            {hasAccess(userRole as UserRole, ['ADMIN', 'PIESAR']) && (
+            {hasAccess(userRole as UserRole, ['ADMIN']) && (
                 <div className="">
                     <h3 className="pb-4 pt-4 font-bold ">{t('Favorite Projects')}</h3>
                     <div
@@ -517,13 +517,13 @@ export default function Proiecte() {
                         padding: '16px',
                     }}
                 >
-                    {hasAccess(userRole, ['ADMIN', 'RECEPTION','OPERATOR']) && 
+                    {hasAccess(userRole, ['ADMIN', 'RECEPTION','OPERATOR','MAGAZIE','PIESAR']) && 
                     (    
                         <CustomTable
                             columns={columns}
                             data={data.projects}
                             actionButton={
-                                userRole !== 'OPERATOR' && (
+                                userRole !== 'OPERATOR' && userRole !== 'MAGAZIE' && userRole !== 'PIESAR' && (
                                 <Link to={'/proiecte/nou'}>
                                     <Button
                                         style={{

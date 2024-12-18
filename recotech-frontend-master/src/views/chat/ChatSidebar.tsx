@@ -38,6 +38,10 @@ const Sidebar = ({ onUserSelect, friendsList }: any) => {
 
             <ul className="h-[90%] overflow-y-auto pt-4">
                 {filteredUsers.map((contact: any) => {
+                    // console.log("contact -- >" , contact.lastMessage)
+                    // console.log("contact -- >" , JSON.stringify(contact))
+                    console.log("contact -- >" , contact.lastMessageTime)
+                    
                     return (
                         <li
                             key={contact.connectionId}
@@ -61,7 +65,7 @@ const Sidebar = ({ onUserSelect, friendsList }: any) => {
                                 </div>
                             </div>
                             <div className="text-right">
-                                <p className="text-xs text-gray-500">{contact.time || '00:00'}</p>
+                                <p className="text-xs text-gray-500">{contact.lastMessageTime || '00:00'}</p>
                                 {contact.unSeen > 0 && (
                                     <span className="bg-red-500 text-white rounded-full px-2 text-xs ml-2">
                                         {contact.unSeen ?? 5}
